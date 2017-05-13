@@ -13,7 +13,7 @@ public class MainFrame {
         mainWindow.setBounds((int) ((Toolkit.getDefaultToolkit().getScreenSize().getWidth()) - 1100) /2,
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() -600) /2,
                 1100, 700 );
-        mainWindow.setResizable(true);//changed from false to true
+        mainWindow.setResizable(false);//change from false to true?
         mainWindow.setVisible(true);
     }
 }
