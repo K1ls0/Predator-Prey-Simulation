@@ -52,10 +52,13 @@ public class FrameCore extends JFrame {
 
         //setup JSpinner
         chooseXCoordinate = new JSpinner(new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1));
+        chooseXCoordinate.setSize(20, chooseXCoordinate.getHeight());
         chooseYCoordinate = new JSpinner(new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1));
+        chooseYCoordinate.setSize(20, chooseYCoordinate.getHeight());
 
         //setup "X"-JLabel
         JLabel xLabel = new JLabel("X");
+        xLabel.setSize(10, xLabel.getHeight());
         xLabel.setHorizontalAlignment(JLabel.CENTER);
 
         //add components to Panel
