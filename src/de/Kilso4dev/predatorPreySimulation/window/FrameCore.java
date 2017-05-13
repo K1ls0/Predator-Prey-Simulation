@@ -1,7 +1,6 @@
 package de.Kilso4dev.predatorPreySimulation.window;
 
 import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
-import de.Kilso4dev.predatorPreySimulation.core.SimulationCore;
 
 import javax.swing.*;
 import java.awt.*;
