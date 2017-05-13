@@ -56,7 +56,7 @@ public class FrameCore extends JFrame {
         chooseYCoordinate = new JSpinner(new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1));
         chooseYCoordinate.setSize(20, chooseYCoordinate.getHeight());
 
-        //setup "X"-JLabel
+        //setup X-JLabel
         JLabel xLabel = new JLabel("X");
         xLabel.setSize(10, xLabel.getHeight());
         xLabel.setHorizontalAlignment(JLabel.CENTER);
