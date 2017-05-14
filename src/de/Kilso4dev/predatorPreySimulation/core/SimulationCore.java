@@ -43,10 +43,4 @@ public class SimulationCore {
     public void interrupSimulation() {
 
     }
-
-
-    //private class for the SimulationThread
-    private class SimulationThread extends Thread {
-
-    }
 }
