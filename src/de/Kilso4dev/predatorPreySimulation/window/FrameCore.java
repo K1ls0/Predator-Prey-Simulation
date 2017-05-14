@@ -22,6 +22,10 @@ public class FrameCore extends JFrame {
     private JTextField preyInput;
     private JTextField predatorInput;
     private JButton abbruchButton;
+    private JButton startButton;
+    private JButton closeButton;
+    private JSpinner    chooseXCoordinate,
+                        chooseYCoordinate;
     private final Font fAll = new Font("Times New Roman", Font.PLAIN, 17);
 
     public FrameCore() {
@@ -34,7 +38,27 @@ public class FrameCore extends JFrame {
 
     private void createBootomLine() {
         abbruchButton = new JButton("Abbruch");
+        abbruchButton.setBounds(540, 620, 120, 30);
+        abbruchButton.setVisible(true);
         abbruchButton.setEnabled(false);
+        abbruchButton.setFont(fAll);
+        abbruchButton.addActionListener(new ButtonListener(this));
+        cMainWindow.add(abbruchButton);
+
+        abbruchButton = new JButton("Start");
+        abbruchButton.setBounds(670, 620, 120, 30);
+        abbruchButton.setVisible(true);
+        abbruchButton.setFont(fAll);
+        abbruchButton.addActionListener(new ButtonListener(this));
+        cMainWindow.add(abbruchButton);
+
+        abbruchButton = new JButton("Schließen");
+        abbruchButton.setBounds(800, 620, 120, 30);
+        abbruchButton.setVisible(true);
+        abbruchButton.setFont(fAll);
+        abbruchButton.addActionListener(new ButtonListener(this));
+        cMainWindow.add(abbruchButton);
+
     }
 
     private void createHeadline() {
@@ -83,7 +107,7 @@ public class FrameCore extends JFrame {
         animalsRandom.setBounds(750, 59, 150, 60);
         animalsRandom.setVisible(true);
         animalsRandom.setFont(fAll);
-        animalsRandom.addActionListener(new ButtonListner());
+        animalsRandom.addActionListener(new ButtonListener(this));
         headlineMenu.add(animalsRandom);
     }
 
@@ -104,7 +128,7 @@ public class FrameCore extends JFrame {
         fieldRandom.setBounds(370, 59, 150, 30);
         fieldRandom.setVisible(true);
         fieldRandom.setFont(fAll);
-        fieldRandom.addActionListener(new ButtonListner());
+        fieldRandom.addActionListener(new ButtonListener(this));
         headlineMenu.add(fieldRandom);
     }
 
@@ -125,16 +149,32 @@ public class FrameCore extends JFrame {
         generationRandom.setBounds(90, 59, 150, 30);
         generationRandom.setVisible(true);
         generationRandom.setFont(fAll);
-        generationRandom.addActionListener(new ButtonListner());
+        generationRandom.addActionListener(new ButtonListener(this));
         headlineMenu.add(generationRandom);
     }
 
-    private class ButtonListner implements ActionListener {
+
+
+    private class ButtonListener implements ActionListener {
+
+        private JFrame reference;
+
+        public ButtonListener(JFrame reference) {
+            this.reference = reference;
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if (e.getSource().equals(abbruchButton)) {
-                simulationCore.interruptSimulation();
+                if (simulationCore == null) {simulationCore.interruptSimulation();}
+
+            } else if (e.getSource().equals(closeButton)) {
+                if (simulationCore == null) {simulationCore.interruptSimulation();}
+                reference.dispose();
+
+            } else if (e.getSource().equals(startButton)) {
+                //int xgird = Integer.parseInt()
             }
         }
     }
