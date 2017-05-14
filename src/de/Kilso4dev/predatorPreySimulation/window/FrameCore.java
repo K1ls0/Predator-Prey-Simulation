@@ -15,17 +15,12 @@ public class FrameCore extends JFrame {
     private Container cMainWindow;
     private JPanel headlineMenu;
     private JButton generationRandom;
-    private JTextField generationInput;
     private JButton fieldRandom;
-    private JTextField fieldInput;
     private JButton animalsRandom;
-    private JTextField preyInput;
-    private JTextField predatorInput;
     private JButton abbruchButton;
     private JButton startButton;
     private JButton closeButton;
-    private JSpinner    chooseXCoordinate,
-                        chooseYCoordinate;
+    private JSpinner    generationInput, fieldInput, preyInput, predatorInput;
     private final Font fAll = new Font("Times New Roman", Font.PLAIN, 17);
 
     public FrameCore() {
@@ -94,13 +89,13 @@ public class FrameCore extends JFrame {
         predatorInfo.setFont(fAll);
         headlineMenu.add(predatorInfo);
 
-        preyInput = new JTextField("8");
+        preyInput = new JSpinner(new SpinnerNumberModel(8, 0, Integer.MAX_VALUE, 1));
         preyInput.setBounds(675, 59, 60, 30);
         preyInput.setVisible(true);
         preyInput.setFont(fAll);
         headlineMenu.add(preyInput);
 
-        predatorInput = new JTextField("8");
+        predatorInput = new JSpinner(new SpinnerNumberModel(8, 0, Integer.MAX_VALUE, 1));
         predatorInput.setBounds(675, 89, 60, 30);
         predatorInput.setVisible(true);
         predatorInput.setFont(fAll);
@@ -122,7 +117,7 @@ public class FrameCore extends JFrame {
         fieldInfo.setFont(fAll);
         headlineMenu.add(fieldInfo);
 
-        fieldInput = new JTextField("6");
+        fieldInput = new JSpinner(new SpinnerNumberModel(6, 0, Integer.MAX_VALUE, 1));
         fieldInput.setBounds(300, 59, 60, 30);
         fieldInput.setVisible(true);
         fieldInput.setFont(fAll);
@@ -144,7 +139,8 @@ public class FrameCore extends JFrame {
         generationInfo.setFont(fAll);
         headlineMenu.add(generationInfo);
 
-        generationInput = new JTextField("100");
+
+        generationInput = new JSpinner(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 10));
         generationInput.setBounds(20, 59, 60, 30);
         generationInput.setVisible(true);
         generationInput.setFont(fAll);
