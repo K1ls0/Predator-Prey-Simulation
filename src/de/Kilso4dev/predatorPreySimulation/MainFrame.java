@@ -10,9 +10,9 @@ public class MainFrame {
         FrameCore mainWindow = new FrameCore();
         mainWindow.setTitle("Simulation einer Räuber-Beute Beziehung");
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainWindow.setBounds((int) ((Toolkit.getDefaultToolkit().getScreenSize().getWidth()) - 1100) /2,
-                (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() -600) /2,
-                1100, 700 );
+        mainWindow.setBounds((int) ((Toolkit.getDefaultToolkit().getScreenSize().getWidth()) - 950) /2,
+                (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() -700) /2,
+                950, 700 );
         mainWindow.setResizable(false);//change from false to true?
         mainWindow.setVisible(true);
     }
