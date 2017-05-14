@@ -40,7 +40,7 @@ public class SimulationCore {
         simulation = new SimulationThread(playingField, generations, moveData);
     }
 
-    public void interrupSimulation() {
+    public void interruptSimulation() {
 
     }
 }
