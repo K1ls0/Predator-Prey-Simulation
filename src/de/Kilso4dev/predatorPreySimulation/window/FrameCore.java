@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: Add A Testarea with a JScrollPane named outputArea to display the output of every Run/ Generation
+// TODO: Add A Testarea with a JScrollPane named outputArea to display the output of every Run/ Generation //ok
 public class FrameCore extends JFrame {
 
     private Container cMainWindow;
