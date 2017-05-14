@@ -41,21 +41,21 @@ public class FrameCore extends JFrame {
         abbruchButton.addActionListener(new ButtonListener());
         cMainWindow.add(abbruchButton);
 
-        abbruchButton = new JButton("Start");
-        abbruchButton.setBounds(670, 620, 120, 30);
-        abbruchButton.setVisible(true);
-        abbruchButton.setFont(fAll);
-        abbruchButton.setActionCommand("bStartPressed");
-        abbruchButton.addActionListener(new ButtonListener());
-        cMainWindow.add(abbruchButton);
+        startButton = new JButton("Start");
+        startButton.setBounds(670, 620, 120, 30);
+        startButton.setVisible(true);
+        startButton.setFont(fAll);
+        startButton.setActionCommand("bStartPressed");
+        startButton.addActionListener(new ButtonListener());
+        cMainWindow.add(startButton);
 
-        abbruchButton = new JButton("Schließen");
-        abbruchButton.setBounds(800, 620, 120, 30);
-        abbruchButton.setVisible(true);
-        abbruchButton.setFont(fAll);
-        abbruchButton.setActionCommand("bClosePressed");
-        abbruchButton.addActionListener(new ButtonListener());
-        cMainWindow.add(abbruchButton);
+        closeButton = new JButton("Schließen");
+        closeButton.setBounds(800, 620, 120, 30);
+        closeButton.setVisible(true);
+        closeButton.setFont(fAll);
+        closeButton.setActionCommand("bClosePressed");
+        closeButton.addActionListener(new ButtonListener());
+        cMainWindow.add(closeButton);
 
     }
 
