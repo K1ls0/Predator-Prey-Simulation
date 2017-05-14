@@ -8,6 +8,15 @@ Anzahl der Jäger
 Anzahl der Beutetiere
 Anzahl der Durchläufe
 
+
+Ausgabe
+
+Generation
+Anzahl Beutetiere
+Anzahl Jäger
+
+
+
 FrameCore OLD
 
     private Container cMainWindow;
