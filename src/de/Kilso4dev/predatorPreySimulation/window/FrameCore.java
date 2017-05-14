@@ -176,11 +176,31 @@ public class FrameCore extends JFrame {
             } else if (e.getActionCommand().equals("bStartPressed")) {
                 //int xgrid = Integer.parseInt()
             } else if (e.getActionCommand().equals("bRandomPreysPredatorsPressed")) {
+                int preyInputRandom;
+                int predatorInputRandom;
+
+                do {
+                    preyInputRandom = (int)((Math.random() * 38000) + 20);
+                    predatorInputRandom = (int)((Math.random() * 38000) + 20);
+                } while ((preyInputRandom + predatorInputRandom) > ((int)fieldInput.getValue() * (int)fieldInput.getValue()));
+
+                preyInput.setValue(preyInputRandom);
+                predatorInput.setValue(predatorInputRandom);
+
 
             } else if (e.getActionCommand().equals("bRandomFieldPressed")) {
 
-            } else if (e.getActionCommand().equals("bRandomAmountPressed")) {
+                int fieldInputRandom;
 
+                do {
+                    fieldInputRandom = (int) ((Math.random() * 200) + 5);
+                } while (fieldInputRandom < ((int)(preyInput.getValue()) +  (int) predatorInput.getValue()));
+
+                fieldInput.setValue(fieldInputRandom);
+
+
+            } else if (e.getActionCommand().equals("bRandomAmountPressed")) {
+                generationInput.setValue((int) (Math.random() * 4950) + 50);
             }
         }
     }
