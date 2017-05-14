@@ -5,4 +5,9 @@ class Prey implements Animal {
     public String getType() {
         return "Prey";
     }
+
+    @Override
+    public int getAmount() {
+        return 2;
+    }
 }

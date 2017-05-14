@@ -1,5 +1,7 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
+import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class SimulationCore {
     int generations;
 
     public SimulationCore(int gridX, int gridY, int predators, int preys, int generations) {
-        playingField = new Animal[gridX][gridY];
+        this.playingField = new Animal[gridX][gridY];
         this.generations = generations;
         this.moveData = new LinkedList<>();
 
@@ -41,6 +43,16 @@ public class SimulationCore {
     }
 
     public void interruptSimulation() {
+        if (simulation != null && simulation.isAlive()) {
+            simulation.interrupt();
+        }
+    }
 
+    public void addSimulationFinishedListener(SimulationFinishedListener l) {
+        simulation.addSimulationFinishedListener(l);
+    }
+
+    private List<MoveData> getMoveData() {
+        return moveData;
     }
 }

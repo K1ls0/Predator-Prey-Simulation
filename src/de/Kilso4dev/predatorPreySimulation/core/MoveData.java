@@ -1,18 +1,25 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
+import java.awt.*;
+
 public class MoveData {
-    public int gridX, gridY;
+    public Dimension coordinates;
 
     public Animal foundAnimal;
-    public  Animal changedAnimal;
+    public Animal changedAnimal;
+
+    public String happening;
 
 
-    public MoveData() {}
-    public MoveData(int gridX, int gridY, Animal foundAnimal, Animal changedAnimal) {
-        this.gridX = gridX;
-        this.gridY = gridY;
+    public MoveData() {
+        happening = new String();
+    }
+    public MoveData(Dimension coordinates, Animal foundAnimal, Animal changedAnimal, String happening) {
+        this.coordinates = coordinates;
 
         this.foundAnimal = foundAnimal;
         this.changedAnimal = changedAnimal;
+
+        this.happening = happening;
     }
 }
