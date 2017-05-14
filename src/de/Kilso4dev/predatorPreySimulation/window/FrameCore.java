@@ -32,31 +32,34 @@ public class FrameCore extends JFrame {
         cMainWindow = getContentPane();
         cMainWindow.setLayout(null);
         createHeadline();
-        createBootomLine();
+        createBottomLine();
         abbruchButton = new JButton("Abbruch");
     }
 
-    private void createBootomLine() {
+    private void createBottomLine() {
         abbruchButton = new JButton("Abbruch");
         abbruchButton.setBounds(540, 620, 120, 30);
         abbruchButton.setVisible(true);
         abbruchButton.setEnabled(false);
         abbruchButton.setFont(fAll);
-        abbruchButton.addActionListener(new ButtonListener(this));
+        abbruchButton.setActionCommand("bCancelPressed");
+        abbruchButton.addActionListener(new ButtonListener());
         cMainWindow.add(abbruchButton);
 
         abbruchButton = new JButton("Start");
         abbruchButton.setBounds(670, 620, 120, 30);
         abbruchButton.setVisible(true);
         abbruchButton.setFont(fAll);
-        abbruchButton.addActionListener(new ButtonListener(this));
+        abbruchButton.setActionCommand("bStartPressed");
+        abbruchButton.addActionListener(new ButtonListener());
         cMainWindow.add(abbruchButton);
 
         abbruchButton = new JButton("Schließen");
         abbruchButton.setBounds(800, 620, 120, 30);
         abbruchButton.setVisible(true);
         abbruchButton.setFont(fAll);
-        abbruchButton.addActionListener(new ButtonListener(this));
+        abbruchButton.setActionCommand("bClosePressed");
+        abbruchButton.addActionListener(new ButtonListener());
         cMainWindow.add(abbruchButton);
 
     }
@@ -107,7 +110,8 @@ public class FrameCore extends JFrame {
         animalsRandom.setBounds(750, 59, 150, 60);
         animalsRandom.setVisible(true);
         animalsRandom.setFont(fAll);
-        animalsRandom.addActionListener(new ButtonListener(this));
+        animalsRandom.setActionCommand("bRandomPreysPredatorsPressed");
+        animalsRandom.addActionListener(new ButtonListener());
         headlineMenu.add(animalsRandom);
     }
 
@@ -128,7 +132,8 @@ public class FrameCore extends JFrame {
         fieldRandom.setBounds(370, 59, 150, 30);
         fieldRandom.setVisible(true);
         fieldRandom.setFont(fAll);
-        fieldRandom.addActionListener(new ButtonListener(this));
+        fieldRandom.setActionCommand("bRandomFieldPressed");
+        fieldRandom.addActionListener(new ButtonListener());
         headlineMenu.add(fieldRandom);
     }
 
@@ -149,7 +154,8 @@ public class FrameCore extends JFrame {
         generationRandom.setBounds(90, 59, 150, 30);
         generationRandom.setVisible(true);
         generationRandom.setFont(fAll);
-        generationRandom.addActionListener(new ButtonListener(this));
+        generationRandom.setActionCommand("bRandomAmountPressed");
+        generationRandom.addActionListener(new ButtonListener());
         headlineMenu.add(generationRandom);
     }
 
@@ -157,24 +163,28 @@ public class FrameCore extends JFrame {
 
     private class ButtonListener implements ActionListener {
 
-        private JFrame reference;
-
-        public ButtonListener(JFrame reference) {
-            this.reference = reference;
-        }
-
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (e.getSource().equals(abbruchButton)) {
-                if (simulationCore == null) {simulationCore.interruptSimulation();}
+            if (e.getActionCommand().equals("bCancelPressed")) {
+                if (simulationCore != null) {
+                    simulationCore.interruptSimulation();
+                }
 
-            } else if (e.getSource().equals(closeButton)) {
-                if (simulationCore == null) {simulationCore.interruptSimulation();}
-                reference.dispose();
+            } else if (e.getActionCommand().equals("bClosePressed")) {
+                if (simulationCore != null) {
+                    simulationCore.interruptSimulation();
+                }
+                dispose();
 
-            } else if (e.getSource().equals(startButton)) {
-                //int xgird = Integer.parseInt()
+            } else if (e.getActionCommand().equals("bStartPressed")) {
+                //int xgrid = Integer.parseInt()
+            } else if (e.getActionCommand().equals("bRandomPreysPredatorsPressed")) {
+
+            } else if (e.getActionCommand().equals("bRandomFieldPressed")) {
+
+            } else if (e.getActionCommand().equals("bRandomAmountPressed")) {
+
             }
         }
     }
