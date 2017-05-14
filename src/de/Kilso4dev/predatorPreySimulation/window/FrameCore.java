@@ -1,6 +1,7 @@
 package de.Kilso4dev.predatorPreySimulation.window;
 
 import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
+import de.Kilso4dev.predatorPreySimulation.core.SimulationCore;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,27 +11,80 @@ import java.awt.event.ActionListener;
 // TODO: Add A Testarea with a JScrollPane named outputArea to display the output of every Run/ Generation //ok
 public class FrameCore extends JFrame {
 
+    private SimulationCore simulationCore;
     private Container cMainWindow;
+    private JPanel headlineMenu;
     private JButton generationRandom;
     private JTextField generationInput;
     private JButton fieldRandom;
     private JTextField fieldInput;
-    private final Font fAll = new Font("Times New Roman", Font.PLAIN, 15);
+    private JButton animalsRandom;
+    private JTextField preyInput;
+    private JTextField predatorInput;
+    private JButton abbruchButton;
+    private final Font fAll = new Font("Times New Roman", Font.PLAIN, 17);
 
     public FrameCore() {
         cMainWindow = getContentPane();
         cMainWindow.setLayout(null);
         createHeadline();
+        createBootomLine();
+        abbruchButton = new JButton("Abbruch");
+    }
+
+    private void createBootomLine() {
+        abbruchButton = new JButton("Abbruch");
+        abbruchButton.setEnabled(false);
     }
 
     private void createHeadline() {
+        headlineMenu = new JPanel(null);
+        headlineMenu.setBounds(0, 0, 950, 130);
+        headlineMenu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         createGenerations();
         createFieldSize();
         createAnimals();
+        headlineMenu.setVisible(true);
+        cMainWindow.add(headlineMenu);
     }
 
     private void createAnimals() {
+        JLabel animalInfo = new JLabel("Spielsteinauswahl:");
+        animalInfo.setBounds(600, 5, 250, 49);
+        animalInfo.setVisible(true);
+        animalInfo.setFont(fAll);
+        headlineMenu.add(animalInfo);
 
+        JLabel preyInfo = new JLabel("Beute:");
+        preyInfo.setBounds(600, 59, 60, 30);
+        preyInfo.setVisible(true);
+        preyInfo.setFont(fAll);
+        headlineMenu.add(preyInfo);
+
+        JLabel predatorInfo = new JLabel("Räuber:");
+        predatorInfo.setBounds(600, 89, 60, 30);
+        predatorInfo.setVisible(true);
+        predatorInfo.setFont(fAll);
+        headlineMenu.add(predatorInfo);
+
+        preyInput = new JTextField("8");
+        preyInput.setBounds(675, 59, 60, 30);
+        preyInput.setVisible(true);
+        preyInput.setFont(fAll);
+        headlineMenu.add(preyInput);
+
+        predatorInput = new JTextField("8");
+        predatorInput.setBounds(675, 89, 60, 30);
+        predatorInput.setVisible(true);
+        predatorInput.setFont(fAll);
+        headlineMenu.add(predatorInput);
+
+        animalsRandom = new JButton("Zufällige Steine");
+        animalsRandom.setBounds(750, 59, 150, 60);
+        animalsRandom.setVisible(true);
+        animalsRandom.setFont(fAll);
+        animalsRandom.addActionListener(new ButtonListner());
+        headlineMenu.add(animalsRandom);
     }
 
     private void createFieldSize() {
@@ -38,49 +92,49 @@ public class FrameCore extends JFrame {
         fieldInfo.setBounds(300, 5, 250, 49);
         fieldInfo.setVisible(true);
         fieldInfo.setFont(fAll);
-        cMainWindow.add(fieldInfo);
+        headlineMenu.add(fieldInfo);
 
         fieldInput = new JTextField("6");
         fieldInput.setBounds(300, 59, 60, 30);
         fieldInput.setVisible(true);
         fieldInput.setFont(fAll);
-        cMainWindow.add(fieldInput);
+        headlineMenu.add(fieldInput);
 
         fieldRandom = new JButton("Zufällige Größe");
         fieldRandom.setBounds(370, 59, 150, 30);
         fieldRandom.setVisible(true);
         fieldRandom.setFont(fAll);
         fieldRandom.addActionListener(new ButtonListner());
-        cMainWindow.add(fieldRandom);
+        headlineMenu.add(fieldRandom);
     }
 
     private void createGenerations() {
-        JLabel generationInfo = new JLabel("Anzahl der simulierten Generationen:");
+        JLabel generationInfo = new JLabel("Anzahl der Generationen:");
         generationInfo.setBounds(20, 5, 250, 49);
         generationInfo.setVisible(true);
         generationInfo.setFont(fAll);
-        cMainWindow.add(generationInfo);
+        headlineMenu.add(generationInfo);
 
         generationInput = new JTextField("100");
         generationInput.setBounds(20, 59, 60, 30);
         generationInput.setVisible(true);
         generationInput.setFont(fAll);
-        cMainWindow.add(generationInput);
+        headlineMenu.add(generationInput);
 
         generationRandom = new JButton("Zufällige Anzahl");
         generationRandom.setBounds(90, 59, 150, 30);
         generationRandom.setVisible(true);
         generationRandom.setFont(fAll);
         generationRandom.addActionListener(new ButtonListner());
-        cMainWindow.add(generationRandom);
+        headlineMenu.add(generationRandom);
     }
 
     private class ButtonListner implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource().equals(generationRandom)) {
-
+            if (e.getSource().equals(abbruchButton)) {
+                simulationCore.interruptSimulation();
             }
         }
     }
