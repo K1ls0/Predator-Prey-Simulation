@@ -2,6 +2,8 @@ package de.Kilso4dev.predatorPreySimulation.window;
 
 import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
 import de.Kilso4dev.predatorPreySimulation.core.SimulationCore;
+import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
+import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -18,7 +20,7 @@ public class FrameCore extends JFrame {
     private JButton generationRandom;
     private JButton fieldRandom;
     private JButton animalsRandom;
-    private JButton abbruchButton;
+    private JButton stopButton;
     private JButton startButton;
     private JButton closeButton;
     private JSpinner    generationInput, fieldInput, preyInput, predatorInput;
@@ -40,14 +42,14 @@ public class FrameCore extends JFrame {
     }
 
     private void createBottomLine() {
-        abbruchButton = new JButton("Abbruch");
-        abbruchButton.setBounds(540, 620, 120, 30);
-        abbruchButton.setVisible(true);
-        abbruchButton.setEnabled(false);
-        abbruchButton.setFont(fAll);
-        abbruchButton.setActionCommand("bCancelPressed");
-        abbruchButton.addActionListener(new ButtonListener());
-        cMainWindow.add(abbruchButton);
+        stopButton = new JButton("Abbruch");
+        stopButton.setBounds(540, 620, 120, 30);
+        stopButton.setVisible(true);
+        stopButton.setEnabled(false);
+        stopButton.setFont(fAll);
+        stopButton.setActionCommand("bCancelPressed");
+        stopButton.addActionListener(new ButtonListener());
+        cMainWindow.add(stopButton);
 
         startButton = new JButton("Start");
         startButton.setBounds(670, 620, 120, 30);
@@ -206,6 +208,7 @@ public class FrameCore extends JFrame {
             if (e.getActionCommand().equals("bCancelPressed")) {
                 if (simulationCore != null) {
                     simulationCore.interruptSimulation();
+                    this.change(true);
                 }
 
 
@@ -220,8 +223,16 @@ public class FrameCore extends JFrame {
 
 
             } else if (e.getActionCommand().equals("bStartPressed")) {
-                //int xgrid = Integer.parseInt()
-
+                this.change(false);
+                simulationCore = new SimulationCore((int) fieldInput.getValue(), (int) fieldInput.getValue(),
+                        (int) predatorInput.getValue(), (int) preyInput.getValue(), (int) generationInput.getValue());
+                simulationCore.addSimulationFinishedListener(new SimulationFinishedListener() {
+                    @Override
+                    public void SimulationFinished(SimulationEvent e) {
+                        change(true);
+                    }
+                });
+                simulationCore.startSimulation();
 
 
 
@@ -253,6 +264,14 @@ public class FrameCore extends JFrame {
 
             } else if (e.getActionCommand().equals("bRandomAmountPressed")) {
                 generationInput.setValue((int) (Math.random() * 4950) + 50);
+            }
+        }
+
+        private void change(boolean b) {
+            startButton.setEnabled(b);
+            stopButton.setEnabled(!b);
+            for (Component cComponent : headlineMenu.getComponents()) {
+                cComponent.setEnabled(b);
             }
         }
     }
