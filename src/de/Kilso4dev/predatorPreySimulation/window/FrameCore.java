@@ -17,7 +17,7 @@ public class FrameCore extends JFrame {
     private JButton generationRandom;
     private JButton fieldRandom;
     private JButton animalsRandom;
-    private JButton abbruchButton;
+    private JButton stopButton;
     private JButton startButton;
     private JButton closeButton;
     private JSpinner    generationInput, fieldInput, preyInput, predatorInput;
@@ -28,18 +28,17 @@ public class FrameCore extends JFrame {
         cMainWindow.setLayout(null);
         createHeadline();
         createBottomLine();
-        abbruchButton = new JButton("Abbruch");
     }
 
     private void createBottomLine() {
-        abbruchButton = new JButton("Abbruch");
-        abbruchButton.setBounds(540, 620, 120, 30);
-        abbruchButton.setVisible(true);
-        abbruchButton.setEnabled(false);
-        abbruchButton.setFont(fAll);
-        abbruchButton.setActionCommand("bCancelPressed");
-        abbruchButton.addActionListener(new ButtonListener());
-        cMainWindow.add(abbruchButton);
+        stopButton = new JButton("Abbruch");
+        stopButton.setBounds(540, 620, 120, 30);
+        stopButton.setVisible(true);
+        stopButton.setEnabled(false);
+        stopButton.setFont(fAll);
+        stopButton.setActionCommand("bCancelPressed");
+        stopButton.addActionListener(new ButtonListener());
+        cMainWindow.add(stopButton);
 
         startButton = new JButton("Start");
         startButton.setBounds(670, 620, 120, 30);
@@ -180,7 +179,7 @@ public class FrameCore extends JFrame {
 
 
             } else if (e.getActionCommand().equals("bStartPressed")) {
-                //int xgrid = Integer.parseInt()
+                this.start(false);
 
 
 
@@ -215,6 +214,11 @@ public class FrameCore extends JFrame {
             } else if (e.getActionCommand().equals("bRandomAmountPressed")) {
                 generationInput.setValue((int) (Math.random() * 4950) + 50);
             }
+        }
+
+        private void start(boolean b) {
+            startButton.setEnabled(b);
+            stopButton
         }
     }
 }
