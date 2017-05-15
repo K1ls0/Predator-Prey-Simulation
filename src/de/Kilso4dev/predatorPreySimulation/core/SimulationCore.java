@@ -1,6 +1,7 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
+import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,8 +39,8 @@ public class SimulationCore {
         }
     }
 
-    public void startSimulation() {
-        simulation = new SimulationThread(playingField, generations, moveData);
+    public void startSimulation(FrameCore reference) {
+        simulation = new SimulationThread(reference, playingField, generations, moveData);
     }
 
     public void interruptSimulation() {

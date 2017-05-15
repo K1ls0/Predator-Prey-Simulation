@@ -2,6 +2,7 @@ package de.Kilso4dev.predatorPreySimulation.core;
 
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
+import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SimulationThread extends Thread {
+    private FrameCore coreReference;
     private int generations;
 
     private Animal[][] playingField;
@@ -17,7 +19,8 @@ public class SimulationThread extends Thread {
     private List<SimulationFinishedListener> listener;
 
 
-    public SimulationThread(Animal[][] playingField, int generations, List<MoveData> targetData) {
+    public SimulationThread(FrameCore reference, Animal[][] playingField, int generations, List<MoveData> targetData) {
+        this.coreReference = reference;
         this.generations = generations;
         this.playingField = playingField;
         this.targetData = targetData;
@@ -27,9 +30,11 @@ public class SimulationThread extends Thread {
 
     public void run() {
 
-        for (int i = 0; i < generations; i++) {
+        for (int i = 1; i <= generations; i++) {
             //round for Predator
             predatorsMove(i);
+
+            //round for Prey
             preysMove(i);
         }
 
@@ -52,7 +57,7 @@ public class SimulationThread extends Thread {
         int y = (int) (Math.random() * playingField[iteration].length);
 
         md.coordinates = new Dimension(x, y);
-        md.foundAnimal = playingField[x][y];
+        md.iteration = iteration;
 
         if ((playingField[x][y] == null) || (playingField[x][y] instanceof Predator)) {
             deleteNextPredator();
@@ -60,7 +65,10 @@ public class SimulationThread extends Thread {
             playingField[x][y] = new Predator();
         }
 
-        md.changedAnimal = playingField[x][y];
+        md.predAmount = getPredatorAmount();
+        md.preyAmount = getPreyAmount();
+
+        coreReference.addTextAreaEntry(md);
 
         targetData.add(md);
     }
@@ -72,20 +80,20 @@ public class SimulationThread extends Thread {
         int y = (int) (Math.random() * playingField[iteration].length);
 
         md.coordinates = new Dimension(x, y);
-        md.foundAnimal = playingField[x][y];
+        md.iteration = iteration;
 
         if (playingField[x][y] == null) {
             playingField[x][y] = new Prey();
-
-            md.changedAnimal = playingField[x][y];
 
         } else if (playingField[x][y] instanceof Prey) {
             Dimension d = getNextFreeArea(new Dimension(x, y));
             playingField[(int)d.getWidth()][(int)d.getHeight()] = new Prey();
 
             md.coordinates = d;
-            md.changedAnimal = playingField[(int)d.getWidth()][(int)d.getHeight()];
         }
+
+        md.predAmount = getPredatorAmount();
+        md.preyAmount = getPreyAmount();
 
         targetData.add(md);
     }
@@ -115,6 +123,31 @@ public class SimulationThread extends Thread {
         return null;
     }
 
+    private long getPredatorAmount() {
+        long iterator = 0;
+
+        for (Animal[] cAnimal1 : playingField) {
+            for (Animal cAnimal2 : cAnimal1) {
+                if (cAnimal2 != null && cAnimal2 instanceof Predator) {
+                    iterator++;
+                }
+            }
+        }
+        return iterator;
+    }
+
+    private long getPreyAmount() {
+        long iterator = 0;
+
+        for (Animal[] cAnimal1 : playingField) {
+            for (Animal cAnimal2 : cAnimal1) {
+                if (cAnimal2 != null && cAnimal2 instanceof Prey) {
+                    iterator++;
+                }
+            }
+        }
+        return iterator;
+    }
 
 
     public void addSimulationFinishedListener(SimulationFinishedListener l) {

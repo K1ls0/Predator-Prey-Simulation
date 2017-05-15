@@ -1,6 +1,7 @@
 package de.Kilso4dev.predatorPreySimulation.window;
 
 import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
+import de.Kilso4dev.predatorPreySimulation.core.MoveData;
 import de.Kilso4dev.predatorPreySimulation.core.SimulationCore;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
@@ -10,6 +11,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 // TODO: Add A Textarea with a JScrollPane named outputArea to display the output of every Run/ Generation //ok
 public class FrameCore extends JFrame {
@@ -48,7 +50,7 @@ public class FrameCore extends JFrame {
         stopButton.setEnabled(false);
         stopButton.setFont(fAll);
         stopButton.setActionCommand("bCancelPressed");
-        stopButton.addActionListener(new ButtonListener());
+        stopButton.addActionListener(new ButtonListener(this));
         cMainWindow.add(stopButton);
 
         startButton = new JButton("Start");
@@ -56,7 +58,7 @@ public class FrameCore extends JFrame {
         startButton.setVisible(true);
         startButton.setFont(fAll);
         startButton.setActionCommand("bStartPressed");
-        startButton.addActionListener(new ButtonListener());
+        startButton.addActionListener(new ButtonListener(this));
         cMainWindow.add(startButton);
 
         closeButton = new JButton("Schließen");
@@ -64,7 +66,7 @@ public class FrameCore extends JFrame {
         closeButton.setVisible(true);
         closeButton.setFont(fAll);
         closeButton.setActionCommand("bClosePressed");
-        closeButton.addActionListener(new ButtonListener());
+        closeButton.addActionListener(new ButtonListener(this));
         cMainWindow.add(closeButton);
 
     }
@@ -149,7 +151,7 @@ public class FrameCore extends JFrame {
         animalsRandom.setVisible(true);
         animalsRandom.setFont(fAll);
         animalsRandom.setActionCommand("bRandomPreysPredatorsPressed");
-        animalsRandom.addActionListener(new ButtonListener());
+        animalsRandom.addActionListener(new ButtonListener(this));
         headlineMenu.add(animalsRandom);
     }
 
@@ -171,7 +173,7 @@ public class FrameCore extends JFrame {
         fieldRandom.setVisible(true);
         fieldRandom.setFont(fAll);
         fieldRandom.setActionCommand("bRandomFieldPressed");
-        fieldRandom.addActionListener(new ButtonListener());
+        fieldRandom.addActionListener(new ButtonListener(this));
         headlineMenu.add(fieldRandom);
     }
 
@@ -194,13 +196,19 @@ public class FrameCore extends JFrame {
         generationRandom.setVisible(true);
         generationRandom.setFont(fAll);
         generationRandom.setActionCommand("bRandomAmountPressed");
-        generationRandom.addActionListener(new ButtonListener());
+        generationRandom.addActionListener(new ButtonListener(this));
         headlineMenu.add(generationRandom);
     }
 
 
 
     private class ButtonListener implements ActionListener {
+        private FrameCore referenceFrame;
+
+        ButtonListener(FrameCore ref) {
+            this.referenceFrame = ref;
+        }
+
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -230,9 +238,13 @@ public class FrameCore extends JFrame {
                     @Override
                     public void SimulationFinished(SimulationEvent e) {
                         change(true);
+                        java.util.List<MoveData> data = e.getSource().getMoveData();
+
+                        MoveData lastData = data.get(data.size()-1);
+
                     }
                 });
-                simulationCore.startSimulation();
+                simulationCore.startSimulation(referenceFrame);
 
 
 
@@ -274,5 +286,11 @@ public class FrameCore extends JFrame {
                 cComponent.setEnabled(b);
             }
         }
+    }
+
+
+
+    public void addTextAreaEntry(MoveData data) {
+        partOutput.append(data.iteration++ + ". gen: Predators: " + data.predAmount + " || Preys: " + data.preyAmount + "\n");
     }
 }

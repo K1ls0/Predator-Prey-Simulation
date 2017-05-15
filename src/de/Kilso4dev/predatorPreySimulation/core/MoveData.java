@@ -5,21 +5,28 @@ import java.awt.*;
 public class MoveData {
     public Dimension coordinates;
 
-    public Animal foundAnimal;
-    public Animal changedAnimal;
+    public long  iteration,
+                predAmount,
+                preyAmount;
+
 
     public String happening;
 
 
     public MoveData() {
         happening = new String();
+        iteration = 0;
+        preyAmount = 0;
+        predAmount = 0;
     }
-    public MoveData(Dimension coordinates, Animal foundAnimal, Animal changedAnimal, String happening) {
+    public MoveData(Dimension coordinates, int predatorAmount, int preyAmount, String happening, int iteration) {
         this.coordinates = coordinates;
 
-        this.foundAnimal = foundAnimal;
-        this.changedAnimal = changedAnimal;
+        this.predAmount = predatorAmount;
+        this.preyAmount = preyAmount;
 
         this.happening = happening;
+
+        this.iteration = iteration;
     }
 }
