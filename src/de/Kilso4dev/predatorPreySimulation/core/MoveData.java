@@ -1,9 +1,11 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
+import de.Kilso4dev.predatorPreySimulation.core.events.Coordinates;
+
 import java.awt.*;
 
 public class MoveData {
-    public Dimension coordinates;
+    public Coordinates coordinates;
 
     public long  iteration,
                 predAmount,
@@ -19,7 +21,7 @@ public class MoveData {
         preyAmount = 0;
         predAmount = 0;
     }
-    public MoveData(Dimension coordinates, int predatorAmount, int preyAmount, String happening, int iteration) {
+    public MoveData(Coordinates coordinates, int predatorAmount, int preyAmount, String happening, int iteration) {
         this.coordinates = coordinates;
 
         this.predAmount = predatorAmount;

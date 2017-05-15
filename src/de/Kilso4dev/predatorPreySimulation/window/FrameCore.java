@@ -234,7 +234,10 @@ public class FrameCore extends JFrame {
                 this.change(false);
                 simulationCore = new SimulationCore((int) fieldInput.getValue(), (int) fieldInput.getValue(),
                         (int) predatorInput.getValue(), (int) preyInput.getValue(), (int) generationInput.getValue());
-                simulationCore.addSimulationFinishedListener(new SimulationFinishedListener() {
+
+                resetOutput();
+
+                simulationCore.startSimulation(referenceFrame, new SimulationFinishedListener() {
                     @Override
                     public void SimulationFinished(SimulationEvent e) {
                         change(true);
@@ -242,9 +245,10 @@ public class FrameCore extends JFrame {
 
                         MoveData lastData = data.get(data.size()-1);
 
+                        predOutput.setText("Predators: " + (lastData.predAmount * SimulationConstants.PREDATOR_AMOUNT));
+                        preyOutput.setText("Preys: " + (lastData.preyAmount * SimulationConstants.PREY_AMOUNT));
                     }
                 });
-                simulationCore.startSimulation(referenceFrame);
 
 
 
@@ -289,8 +293,15 @@ public class FrameCore extends JFrame {
     }
 
 
+    private void resetOutput() {
+        partOutput.setText(null);
+
+
+        predOutput.setText(null);
+        preyOutput.setText(null);
+    }
 
     public void addTextAreaEntry(MoveData data) {
-        partOutput.append(data.iteration++ + ". gen: Predators: " + data.predAmount + " || Preys: " + data.preyAmount + "\n");
+        partOutput.append(data.iteration++ + ". gen: Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + " || Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
     }
 }

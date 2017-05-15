@@ -5,9 +5,4 @@ class Predator implements Animal {
     public String getType() {
         return "Predator";
     }
-
-    @Override
-    public int getAmount() {
-        return 1;
-    }
 }

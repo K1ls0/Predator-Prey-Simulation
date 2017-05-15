@@ -39,8 +39,11 @@ public class SimulationCore {
         }
     }
 
-    public void startSimulation(FrameCore reference) {
+    public void startSimulation(FrameCore reference, SimulationFinishedListener l) {
         simulation = new SimulationThread(reference, playingField, generations, moveData);
+        simulation.addSimulationFinishedListener(l);
+
+        simulation.start();
     }
 
     public void interruptSimulation() {
@@ -49,9 +52,6 @@ public class SimulationCore {
         }
     }
 
-    public void addSimulationFinishedListener(SimulationFinishedListener l) {
-        simulation.addSimulationFinishedListener(l);
-    }
 
     private List<MoveData> getMoveData() {
         return moveData;

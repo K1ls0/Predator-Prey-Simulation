@@ -1,5 +1,6 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
+import de.Kilso4dev.predatorPreySimulation.core.events.Coordinates;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
 import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
@@ -20,6 +21,8 @@ public class SimulationThread extends Thread {
 
 
     public SimulationThread(FrameCore reference, Animal[][] playingField, int generations, List<MoveData> targetData) {
+        setDaemon(true);
+
         this.coreReference = reference;
         this.generations = generations;
         this.playingField = playingField;
@@ -54,9 +57,9 @@ public class SimulationThread extends Thread {
         MoveData md = new MoveData();
 
         int x = (int) (Math.random() * playingField.length);
-        int y = (int) (Math.random() * playingField[iteration].length);
+        int y = (int) (Math.random() * playingField[0].length);
 
-        md.coordinates = new Dimension(x, y);
+        md.coordinates = new Coordinates(x, y);
         md.iteration = iteration;
 
         if ((playingField[x][y] == null) || (playingField[x][y] instanceof Predator)) {
@@ -77,18 +80,19 @@ public class SimulationThread extends Thread {
         MoveData md = new MoveData();
 
         int x = (int) (Math.random() * playingField.length);
-        int y = (int) (Math.random() * playingField[iteration].length);
+        int y = (int) (Math.random() * playingField[0].length);
 
-        md.coordinates = new Dimension(x, y);
+        md.coordinates = new Coordinates(x, y);
         md.iteration = iteration;
 
         if (playingField[x][y] == null) {
             playingField[x][y] = new Prey();
 
         } else if (playingField[x][y] instanceof Prey) {
-            Dimension d = getNextFreeArea(new Dimension(x, y));
-            playingField[(int)d.getWidth()][(int)d.getHeight()] = new Prey();
-
+            Coordinates d = getNextFreeArea(new Coordinates(x, y));
+            if (d != null) {
+                playingField[d.getX()][d.getY()] = new Prey();
+            }
             md.coordinates = d;
         }
 
@@ -112,11 +116,11 @@ public class SimulationThread extends Thread {
     }
 
     //TODO need a better algorithm to get the next free coordinates
-    private Dimension getNextFreeArea(Dimension currentCoordinates) {
-        for (int x = (int) currentCoordinates.getWidth(); x < playingField.length; x++) {
-            for (int y = (int) currentCoordinates.getHeight(); y < playingField[x].length; y++) {
+    private Coordinates getNextFreeArea(Coordinates currentCoordinates) {
+        for (int x = currentCoordinates.getX(); x < playingField.length; x++) {
+            for (int y = currentCoordinates.getY(); y < playingField[x].length; y++) {
                 if (playingField[x][y] == null) {
-                    return new Dimension(x, y);
+                    return new Coordinates(x, y);
                 }
             }
         }
