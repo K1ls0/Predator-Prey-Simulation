@@ -6,11 +6,12 @@ import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: Add A Testarea with a JScrollPane named outputArea to display the output of every Run/ Generation //ok
+// TODO: Add A Textarea with a JScrollPane named outputArea to display the output of every Run/ Generation //ok
 public class FrameCore extends JFrame {
 
     private SimulationCore simulationCore;
@@ -23,6 +24,13 @@ public class FrameCore extends JFrame {
     private JButton startButton;
     private JButton closeButton;
     private JSpinner    generationInput, fieldInput, preyInput, predatorInput;
+
+    private JTextArea partOutput;
+    private JScrollPane partOutputPane;
+    private JPanel predPreyOutputPanel;
+    private JTextField  predOutput,
+                        preyOutput;
+
     private final Font fAll = new Font("Times New Roman", Font.PLAIN, 17);
 
     public FrameCore() {
@@ -30,6 +38,7 @@ public class FrameCore extends JFrame {
         cMainWindow.setLayout(null);
         createHeadline();
         createBottomLine();
+        createOutput();
     }
 
     private void createBottomLine() {
@@ -58,6 +67,39 @@ public class FrameCore extends JFrame {
         closeButton.addActionListener(new ButtonListener());
         cMainWindow.add(closeButton);
 
+    }
+
+    private void createOutput() {
+        partOutput = new JTextArea();
+        partOutput.setBounds(90, 200, 300, 350);
+        partOutput.setWrapStyleWord(true);
+        partOutput.setLineWrap(true);
+        partOutput.setFont(new Font(fAll.getFontName(), fAll.getStyle(), 10));
+        partOutput.setEditable(false);
+
+        partOutputPane = new JScrollPane(partOutput);
+        partOutputPane.setBounds(90, 200, 300, 350);
+        partOutputPane.setBorder(new LineBorder(new Color(50,50,50)));
+
+        cMainWindow.add(partOutputPane);
+
+
+        predPreyOutputPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        predPreyOutputPanel.setBounds(90, 570, 300, 30);
+
+
+        predOutput = new JTextField();
+        predOutput.setFont(fAll);
+        predOutput.setEditable(false);
+        predPreyOutputPanel.add(predOutput);
+
+
+        preyOutput = new JTextField();
+        preyOutput.setFont(fAll);
+        preyOutput.setEditable(false);
+        predPreyOutputPanel.add(preyOutput);
+
+        cMainWindow.add(predPreyOutputPanel);
     }
 
     private void createHeadline() {
@@ -171,7 +213,6 @@ public class FrameCore extends JFrame {
 
 
 
-
             } else if (e.getActionCommand().equals("bClosePressed")) {
                 if (simulationCore != null) {
                     simulationCore.interruptSimulation();
@@ -192,7 +233,6 @@ public class FrameCore extends JFrame {
                     }
                 });
                 simulationCore.startSimulation();
-
 
 
 
