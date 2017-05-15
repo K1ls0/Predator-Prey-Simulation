@@ -2,6 +2,8 @@ package de.Kilso4dev.predatorPreySimulation.window;
 
 import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
 import de.Kilso4dev.predatorPreySimulation.core.SimulationCore;
+import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
+import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -180,6 +182,15 @@ public class FrameCore extends JFrame {
 
             } else if (e.getActionCommand().equals("bStartPressed")) {
                 this.start(false);
+                simulationCore = new SimulationCore((int) fieldInput.getValue(), (int) fieldInput.getValue(),
+                        (int) predatorInput.getValue(), (int) preyInput.getValue(), (int) generationInput.getValue());
+                simulationCore.addSimulationFinishedListener(new SimulationFinishedListener() {
+                    @Override
+                    public void SimulationFinished(SimulationEvent e) {
+                        start(true);
+                    }
+                });
+                simulationCore.startSimulation();
 
 
 
@@ -218,7 +229,10 @@ public class FrameCore extends JFrame {
 
         private void start(boolean b) {
             startButton.setEnabled(b);
-            stopButton
+            stopButton.setEnabled(!b);
+            for (Component cComponent : headlineMenu.getComponents()) {
+                cComponent.setEnabled(b);
+            }
         }
     }
 }
