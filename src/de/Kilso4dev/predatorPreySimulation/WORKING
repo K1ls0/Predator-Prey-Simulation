@@ -89,3 +89,81 @@ FrameCore OLD
 
         cMainWindow.add(fieldChoosingPanel, constr);
     }
+
+     private class ButtonListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (e.getActionCommand().equals("bCancelPressed")) {
+                    if (simulationCore != null) {
+                        simulationCore.interruptSimulation();
+                        this.change(true);
+                    }
+
+
+
+
+                } else if (e.getActionCommand().equals("bClosePressed")) {
+                    if (simulationCore != null) {
+                        simulationCore.interruptSimulation();
+                    }
+                    dispose();
+
+
+
+
+                } else if (e.getActionCommand().equals("bStartPressed")) {
+                    this.change(false);
+                    simulationCore = new SimulationCore((int) fieldInput.getValue(), (int) fieldInput.getValue(),
+                            (int) predatorInput.getValue(), (int) preyInput.getValue(), (int) generationInput.getValue());
+                    simulationCore.addSimulationFinishedListener(new SimulationFinishedListener() {
+                        @Override
+                        public void SimulationFinished(SimulationEvent e) {
+                            change(true);
+                        }
+                    });
+                    simulationCore.startSimulation();
+
+
+
+
+                } else if (e.getActionCommand().equals("bRandomPreysPredatorsPressed")) {
+                    int preyInputRandom;
+                    int predatorInputRandom;
+
+                    do {
+                        preyInputRandom = (int)((Math.random() * 30000) + 20);
+                        predatorInputRandom = (int)((Math.random() * 30000) + 20);
+                    } while ((preyInputRandom + predatorInputRandom) > ((int)fieldInput.getValue() * (int)fieldInput.getValue()));
+
+                    preyInput.setValue(preyInputRandom);
+                    predatorInput.setValue(predatorInputRandom);
+
+
+
+
+                } else if (e.getActionCommand().equals("bRandomFieldPressed")) {
+
+                    int fieldInputRandom;
+
+                    do {
+                        fieldInputRandom = (int) ((Math.random() * 200) + 5);
+                    } while (fieldInputRandom < ((int)(preyInput.getValue()) +  (int) predatorInput.getValue()));
+
+                    fieldInput.setValue(fieldInputRandom);
+
+
+                } else if (e.getActionCommand().equals("bRandomAmountPressed")) {
+                    generationInput.setValue((int) (Math.random() * 4950) + 50);
+                }
+            }
+
+            private void change(boolean b) {
+                startButton.setEnabled(b);
+                stopButton.setEnabled(!b);
+                for (Component cComponent : headlineMenu.getComponents()) {
+                    cComponent.setEnabled(b);
+                }
+            }
+        }
