@@ -28,7 +28,6 @@ public class FrameCore extends JFrame {
         cMainWindow.setLayout(null);
         createHeadline();
         createBottomLine();
-        abbruchButton = new JButton("Abbruch");
     }
 
     private void createBottomLine() {
