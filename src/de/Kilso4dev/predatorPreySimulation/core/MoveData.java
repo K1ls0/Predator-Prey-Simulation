@@ -1,8 +1,10 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
 import de.Kilso4dev.predatorPreySimulation.core.events.Coordinates;
+import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class MoveData {
     public Coordinates coordinates;

@@ -79,7 +79,7 @@ public class FrameCore extends JFrame {
         partOutput.setBounds(90, 200, 300, 350);
         partOutput.setWrapStyleWord(true);
         partOutput.setLineWrap(true);
-        partOutput.setFont(new Font(fAll.getFontName(), fAll.getStyle(), 10));
+        partOutput.setFont(new Font(fAll.getFontName(), fAll.getStyle(), 15));
         partOutput.setEditable(false);
 
         partOutputPane = new JScrollPane(partOutput);
@@ -222,9 +222,8 @@ public class FrameCore extends JFrame {
     }
 
     public void addTextAreaEntry(MoveData data) {
-        partOutput.append(data.iteration++ + ". gen: Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + " || Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
+        partOutput.append(data.iteration++ + ". Gen:     Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + "       Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
     }
-
 
     private class ButtonListener implements ActionListener {
         private FrameCore referenceFrame;
@@ -232,7 +231,6 @@ public class FrameCore extends JFrame {
         ButtonListener(FrameCore ref) {
             this.referenceFrame = ref;
         }
-
 
         @Override
         public void actionPerformed(ActionEvent e) {
