@@ -71,7 +71,7 @@ public class SimulationThread extends Thread {
         md.predAmount = getPredatorAmount();
         md.preyAmount = getPreyAmount();
 
-        coreReference.addTextAreaEntry(md);
+        coreReference.addTextAreaEntry(md, generations);
 
         targetData.add(md);
     }

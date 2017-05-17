@@ -220,6 +220,8 @@ public class FrameCore extends JFrame {
 
         predOutput.setText(null);
         preyOutput.setText(null);
+
+        SimulationConstants.PART_OUTPUT_FORMAT = null;
     }
 
     public void addTextAreaEntry(MoveData data, long maxGenerations) {
