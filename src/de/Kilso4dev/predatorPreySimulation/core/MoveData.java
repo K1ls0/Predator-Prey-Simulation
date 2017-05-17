@@ -23,7 +23,10 @@ public class MoveData {
         preyAmount = 0;
         predAmount = 0;
     }
-    public MoveData(Coordinates coordinates, int predatorAmount, int preyAmount, String happening, int iteration) {
+
+
+
+    public MoveData(Coordinates coordinates, long predatorAmount, long preyAmount, String happening, long currentIteration) {
         this.coordinates = coordinates;
 
         this.predAmount = predatorAmount;
@@ -31,6 +34,6 @@ public class MoveData {
 
         this.happening = happening;
 
-        this.iteration = iteration;
+        this.iteration = currentIteration;
     }
 }

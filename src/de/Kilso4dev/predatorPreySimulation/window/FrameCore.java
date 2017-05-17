@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.text.DecimalFormat;
 
 // TODO: Add A Textarea with a JScrollPane named outputArea to display the output of every Run/ Generation //ok
 public class FrameCore extends JFrame {
@@ -208,6 +208,7 @@ public class FrameCore extends JFrame {
         diagram.setBounds(400, 200, 200, 400);
         diagram.setFont(fAll);
         diagram.setBorder(new LineBorder(new Color(150, 255, 150)));
+
         cMainWindow.add(diagram);
     }
 
@@ -221,9 +222,33 @@ public class FrameCore extends JFrame {
         preyOutput.setText(null);
     }
 
-    public void addTextAreaEntry(MoveData data) {
-        partOutput.append(data.iteration++ + ". Gen:     Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + "       Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
+    public void addTextAreaEntry(MoveData data, long maxGenerations) {
+
+        String iteration = formatByNumberLength(maxGenerations, data.iteration++);
+        partOutput.append(iteration + ". Gen:     Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + "       Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
     }
+
+
+    private String formatByNumberLength(int lengthDigit, int i) {
+        return formatByNumberLength((long) lengthDigit, (long) i);
+    }
+
+    private String formatByNumberLength(long lengthDigit, long l) {
+
+        if (SimulationConstants.PART_OUTPUT_FORMAT == null) {
+            StringBuffer bufferedFormat = new StringBuffer();
+
+
+            for (int iteration = 0; iteration < String.valueOf(lengthDigit).length(); iteration++) {
+                bufferedFormat.append('0');
+            }
+            SimulationConstants.PART_OUTPUT_FORMAT = new DecimalFormat(bufferedFormat.toString());
+        }
+
+        return SimulationConstants.PART_OUTPUT_FORMAT.format(l);
+
+    }
+
 
     private class ButtonListener implements ActionListener {
         private FrameCore referenceFrame;
