@@ -5,6 +5,7 @@ import de.Kilso4dev.predatorPreySimulation.core.MoveData;
 import de.Kilso4dev.predatorPreySimulation.core.SimulationCore;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
+import de.Kilso4dev.predatorPreySimulation.window.components.JDiagramPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -32,6 +33,8 @@ public class FrameCore extends JFrame {
     private JPanel predPreyOutputPanel;
     private JTextField  predOutput,
                         preyOutput;
+
+    private JDiagramPanel diagram;
 
     private final Font fAll = new Font("Times New Roman", Font.PLAIN, 17);
 
@@ -200,6 +203,27 @@ public class FrameCore extends JFrame {
         headlineMenu.add(generationRandom);
     }
 
+    private void createDiagram() {
+        diagram = new JDiagramPanel();
+        diagram.setBounds(400, 200, 200, 400);
+        diagram.setFont(fAll);
+        diagram.setBorder(new LineBorder(new Color(150, 255, 150)));
+        cMainWindow.add(diagram);
+    }
+
+
+
+    private void resetOutput() {
+        partOutput.setText(null);
+
+
+        predOutput.setText(null);
+        preyOutput.setText(null);
+    }
+
+    public void addTextAreaEntry(MoveData data) {
+        partOutput.append(data.iteration++ + ". gen: Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + " || Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
+    }
 
 
     private class ButtonListener implements ActionListener {
@@ -290,18 +314,5 @@ public class FrameCore extends JFrame {
                 cComponent.setEnabled(b);
             }
         }
-    }
-
-
-    private void resetOutput() {
-        partOutput.setText(null);
-
-
-        predOutput.setText(null);
-        preyOutput.setText(null);
-    }
-
-    public void addTextAreaEntry(MoveData data) {
-        partOutput.append(data.iteration++ + ". gen: Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + " || Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
     }
 }
