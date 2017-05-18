@@ -28,6 +28,8 @@ public class DiagramData {
         return dataLength;
     }
 
+
+    //getter of the value preyAmount
     public long[] getPredatorAmount() {
         return predatorAmount;
     }
@@ -35,6 +37,8 @@ public class DiagramData {
         return predatorAmount[index];
     }
 
+
+    //getter of the value preyAmount
     public long[] getPreyAmount() {
         return preyAmount;
     }
