@@ -11,6 +11,12 @@ public class JDiagramPanel extends JPanel {
 
     private DiagramData diagramData;
 
+    private int horizontalStartPoint,
+                verticalStartPoint,
+                horizontalLineLength,
+                verticalLineLength;
+
+
     public JDiagramPanel() {
         super();
     }
@@ -56,17 +62,55 @@ public class JDiagramPanel extends JPanel {
 
         g.drawPolyline(xPoints, yPoints, xPoints.length);
 
+        horizontalStartPoint = 15;
+        verticalStartPoint = getHeight();
+
+        horizontalLineLength = getWidth() - 30;
+        verticalLineLength = getHeight() - 30;
     }
 
     private void drawGridSections(Graphics g) {
         if (diagramData != null) {
+            long    maxData = getMaxData(diagramData.getPredatorAmount()) < getMaxData(diagramData.getPreyAmount()) ?
+                    getMaxData(diagramData.getPreyAmount()) : getMaxData(diagramData.getPredatorAmount());
+            //draw vertical sections
+            //TODO not implemented yet
 
+
+
+
+            //draw horizontal sections
+            //TODO not implemented yet
         }
     }
 
+
+
+    private long getMaxData(long[] data) {
+        long max = 0;
+        for (long currentData : data) {
+            if (max < currentData)
+                max = currentData;
+        }
+        return max;
+    }
+
+
+    private void drawVerticalSectionLine(Graphics g, int x) {
+        g.drawLine(x,getHeight() - 18, x, getHeight() - 12);
+    }
+
+    private void drawHorizontalSectionLine(Graphics g, int y) {
+        g.drawLine(12, y, 18, y);
+    }
+
+
+
+
     private void drawGraph(Graphics g) {
         if (diagramData != null) {
-
+            //draw graph
+            //TODO not implemented yet
         }
     }
 
