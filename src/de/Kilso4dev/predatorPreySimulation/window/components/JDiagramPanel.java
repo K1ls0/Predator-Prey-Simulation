@@ -5,18 +5,18 @@ import de.Kilso4dev.predatorPreySimulation.core.MoveData;
 import javax.swing.*;
 import java.awt.*;
 
-public class JDiagramPanel extends JLabel {
+public class JDiagramPanel extends JPanel {
 
-    private MoveData[] diagramData;
+    private DiagramData diagramData;
 
     public JDiagramPanel() {
         super();
-        diagramData = new MoveData[0];
+        diagramData = new DiagramData(new MoveData[0]);
     }
 
     public JDiagramPanel(MoveData[] data) {
         super();
-        this.diagramData = data;
+        this.diagramData = new DiagramData(data);
     }
 
     @Override

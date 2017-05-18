@@ -44,6 +44,7 @@ public class FrameCore extends JFrame {
         createHeadline();
         createBottomLine();
         createOutput();
+        createDiagram();
     }
 
     private void createBottomLine() {
@@ -207,7 +208,6 @@ public class FrameCore extends JFrame {
         diagram = new JDiagramPanel();
         diagram.setBounds(400, 200, 200, 400);
         diagram.setFont(fAll);
-        diagram.setBorder(new LineBorder(new Color(150, 255, 150)));
 
         cMainWindow.add(diagram);
     }
