@@ -306,8 +306,8 @@ public class FrameCore extends JFrame {
                 int predatorInputRandom;
 
                 do {
-                    preyInputRandom = (int)((Math.random() * 30000) + 20);
-                    predatorInputRandom = (int)((Math.random() * 30000) + 20);
+                    preyInputRandom = (int)(Math.random() * (((Integer)predatorInput.getValue()) * ((Integer)predatorInput.getValue())));
+                    predatorInputRandom = (int)(Math.random() * (((Integer)predatorInput.getValue()) * ((Integer)predatorInput.getValue())));
                 } while ((preyInputRandom + predatorInputRandom) > ((int)fieldInput.getValue() * (int)fieldInput.getValue()));
 
                 preyInput.setValue(preyInputRandom);
