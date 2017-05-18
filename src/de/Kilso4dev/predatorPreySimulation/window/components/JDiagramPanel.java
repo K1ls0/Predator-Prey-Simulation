@@ -21,6 +21,7 @@ public class JDiagramPanel extends JLabel {
 
     @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         drawGrid(g);
     }
 
