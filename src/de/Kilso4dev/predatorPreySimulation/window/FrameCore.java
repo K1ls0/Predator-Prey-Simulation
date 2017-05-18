@@ -208,6 +208,7 @@ public class FrameCore extends JFrame {
         diagram = new JDiagramPanel();
         diagram.setBounds(400, 200, 200, 400);
         diagram.setFont(fAll);
+        diagram.setVisible(false);
 
         cMainWindow.add(diagram);
     }

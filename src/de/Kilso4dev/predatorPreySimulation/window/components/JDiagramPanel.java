@@ -35,4 +35,9 @@ public class JDiagramPanel extends JPanel {
         //vertical diagram line
         g.drawLine(15, getHeight() - 15, 15, 15);
     }
+
+
+
+    public void enableDiagram(boolean status) {
+    }
 }
