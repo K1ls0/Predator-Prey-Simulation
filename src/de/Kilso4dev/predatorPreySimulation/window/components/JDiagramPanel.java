@@ -7,11 +7,12 @@ import java.awt.*;
 
 public class JDiagramPanel extends JPanel {
 
+    private boolean diagramEnabled = false;
+
     private DiagramData diagramData;
 
     public JDiagramPanel() {
         super();
-        diagramData = new DiagramData(new MoveData[0]);
     }
 
     public JDiagramPanel(MoveData[] data) {
@@ -23,6 +24,13 @@ public class JDiagramPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGrid(g);
+
+        if (diagramEnabled) {
+            drawGridSections(g);
+            drawGraph(g);
+        } else {
+
+        }
     }
 
 
@@ -34,10 +42,40 @@ public class JDiagramPanel extends JPanel {
 
         //vertical diagram line
         g.drawLine(15, getHeight() - 15, 15, 15);
+
+        //arrow vertical
+        int[]   xPoints = {10, 15, 20},
+                yPoints = {20, 15, 20};
+
+        g.drawPolyline(xPoints, yPoints, xPoints.length);
+
+
+        //arrow horizontal
+        xPoints = new int[] {getWidth() - 20, getWidth() - 15, getWidth() -20};
+        yPoints = new int[] {getHeight() - 10, getHeight() - 15, getHeight() - 20};
+
+        g.drawPolyline(xPoints, yPoints, xPoints.length);
+
+    }
+
+    private void drawGridSections(Graphics g) {
+        if (diagramData != null) {
+
+        }
+    }
+
+    private void drawGraph(Graphics g) {
+        if (diagramData != null) {
+
+        }
     }
 
 
 
-    public void enableDiagram(boolean status) {
+    public void enableDiagram(boolean flag) {
+        setVisible(flag);
+
+        this.diagramEnabled = flag;
+        repaint();
     }
 }

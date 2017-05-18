@@ -208,7 +208,7 @@ public class FrameCore extends JFrame {
         diagram = new JDiagramPanel();
         diagram.setBounds(400, 200, 200, 400);
         diagram.setFont(fAll);
-        diagram.setVisible(false);
+        diagram.setVisible(true);
 
         cMainWindow.add(diagram);
     }
@@ -307,8 +307,8 @@ public class FrameCore extends JFrame {
                 int predatorInputRandom;
 
                 do {
-                    preyInputRandom = (int)(Math.random() * (((Integer)predatorInput.getValue()) * ((Integer)predatorInput.getValue())));
-                    predatorInputRandom = (int)(Math.random() * (((Integer)predatorInput.getValue()) * ((Integer)predatorInput.getValue())));
+                    preyInputRandom = (int)(Math.random() * ((Integer)fieldInput.getValue() * (Integer)fieldInput.getValue()));
+                    predatorInputRandom = (int)(Math.random() * ((Integer)fieldInput.getValue() * (Integer)fieldInput.getValue()));
                 } while ((preyInputRandom + predatorInputRandom) > ((int)fieldInput.getValue() * (int)fieldInput.getValue()));
 
                 preyInput.setValue(preyInputRandom);
