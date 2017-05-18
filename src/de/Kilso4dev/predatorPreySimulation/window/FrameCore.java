@@ -45,6 +45,15 @@ public class FrameCore extends JFrame {
         createBottomLine();
         createOutput();
         createDiagram();
+        createBeta();
+    }
+
+    private void createBeta() {
+        JLabel betaInfo = new JLabel("Beta - Work in progress");
+        betaInfo.setBounds(550, 225, 250, 49);
+        betaInfo.setVisible(true);
+        betaInfo.setFont(fAll);
+        cMainWindow.add(betaInfo);
     }
 
     private void createBottomLine() {
@@ -138,13 +147,13 @@ public class FrameCore extends JFrame {
         predatorInfo.setFont(fAll);
         headlineMenu.add(predatorInfo);
 
-        preyInput = new JSpinner(new SpinnerNumberModel(8, 0, Integer.MAX_VALUE, 1));
+        preyInput = new JSpinner(new SpinnerNumberModel(8, 1, Integer.MAX_VALUE, 1));
         preyInput.setBounds(675, 59, 60, 30);
         preyInput.setVisible(true);
         preyInput.setFont(fAll);
         headlineMenu.add(preyInput);
 
-        predatorInput = new JSpinner(new SpinnerNumberModel(8, 0, Integer.MAX_VALUE, 1));
+        predatorInput = new JSpinner(new SpinnerNumberModel(8, 1, Integer.MAX_VALUE, 1));
         predatorInput.setBounds(675, 89, 60, 30);
         predatorInput.setVisible(true);
         predatorInput.setFont(fAll);
@@ -166,7 +175,7 @@ public class FrameCore extends JFrame {
         fieldInfo.setFont(fAll);
         headlineMenu.add(fieldInfo);
 
-        fieldInput = new JSpinner(new SpinnerNumberModel(6, 0, Integer.MAX_VALUE, 1));
+        fieldInput = new JSpinner(new SpinnerNumberModel(6, 1, Integer.MAX_VALUE, 1));
         fieldInput.setBounds(300, 59, 60, 30);
         fieldInput.setVisible(true);
         fieldInput.setFont(fAll);
@@ -189,7 +198,7 @@ public class FrameCore extends JFrame {
         headlineMenu.add(generationInfo);
 
 
-        generationInput = new JSpinner(new SpinnerNumberModel(100, 0, Integer.MAX_VALUE, 10));
+        generationInput = new JSpinner(new SpinnerNumberModel(100, 1, Integer.MAX_VALUE, 10));
         generationInput.setBounds(20, 59, 60, 30);
         generationInput.setVisible(true);
         generationInput.setFont(fAll);
@@ -208,7 +217,7 @@ public class FrameCore extends JFrame {
         diagram = new JDiagramPanel();
         diagram.setBounds(400, 200, 200, 400);
         diagram.setFont(fAll);
-        diagram.setVisible(true);
+        diagram.setVisible(false);
 
         cMainWindow.add(diagram);
     }
