@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
-// TODO: Add A Textarea with a JScrollPane named outputArea to display the output of every Run/ Generation //ok
+
 public class FrameCore extends JFrame {
 
     private SimulationCore simulationCore;
