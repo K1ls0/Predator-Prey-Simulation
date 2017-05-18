@@ -39,5 +39,9 @@ public class JDiagramPanel extends JPanel {
 
 
     public void enableDiagram(boolean status) {
+        this.setVisible(status);
+        if (status) {
+
+        }
     }
 }
