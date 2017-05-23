@@ -1,11 +1,17 @@
 package de.Kilso4dev.predatorPreySimulation.window.components;
 
-import de.Kilso4dev.predatorPreySimulation.core.MoveData;
+import de.Kilso4dev.predatorPreySimulation.core.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class JDiagramPanel extends JPanel {
+
+    private static final double NO_DATA_FACTOR = -1d;
+
+    private static final int    VERTICAL_LINE = 1,
+                                HORIZONTAL_LINE = 2;
+
 
     private boolean diagramEnabled = false;
 
@@ -15,6 +21,9 @@ public class JDiagramPanel extends JPanel {
                 verticalStartPoint,
                 horizontalLineLength,
                 verticalLineLength;
+
+    private double  verticalDataFactor = NO_DATA_FACTOR,
+                    horizontalDataFactor = NO_DATA_FACTOR;
 
 
     public JDiagramPanel() {
@@ -73,14 +82,16 @@ public class JDiagramPanel extends JPanel {
         if (diagramData != null) {
             long    maxData = getMaxData(diagramData.getPredatorAmount()) < getMaxData(diagramData.getPreyAmount()) ?
                     getMaxData(diagramData.getPreyAmount()) : getMaxData(diagramData.getPredatorAmount());
-            //draw vertical sections
-            //TODO not implemented yet
 
+            //draw vertical sections
+            //TODO not implemented fully yet
+            setDataFactor(maxData, HORIZONTAL_LINE);
 
 
 
             //draw horizontal sections
             //TODO not implemented yet
+            setDataFactor(diagramData.getDataLength(), VERTICAL_LINE);
         }
     }
 
@@ -93,6 +104,28 @@ public class JDiagramPanel extends JPanel {
                 max = currentData;
         }
         return max;
+    }
+
+    private void setDataFactor(long maximumData, int alignment) {
+        if (alignment == HORIZONTAL_LINE) {
+            horizontalDataFactor = horizontalLineLength / maximumData;
+
+        } else if (alignment == VERTICAL_LINE) {
+            verticalDataFactor = verticalLineLength / maximumData;
+        }
+    }
+
+    private long pixelLengthOf(long data, int alignment) {
+
+        if (verticalDataFactor != NO_DATA_FACTOR && horizontalDataFactor != NO_DATA_FACTOR) {
+            if (alignment == HORIZONTAL_LINE) {
+                return (long) ((data * this.horizontalDataFactor) + horizontalStartPoint);
+            } else if (alignment == VERTICAL_LINE) {
+                return (long) ((data * this.verticalDataFactor) + verticalStartPoint);
+            }
+        }
+
+        return -1;
     }
 
 
@@ -111,6 +144,26 @@ public class JDiagramPanel extends JPanel {
         if (diagramData != null) {
             //draw graph
             //TODO not implemented yet
+
+            int[]   dataX = new int[diagramData.getDataLength()],
+                    dataYPredator = new int[diagramData.getDataLength()],
+                    dataYPrey = new int[diagramData.getDataLength()];
+
+            if (verticalDataFactor != NO_DATA_FACTOR || horizontalDataFactor != NO_DATA_FACTOR) {
+
+                for (int iteration = 0; iteration < diagramData.getDataLength(); iteration++) {
+                    dataX[iteration] =(int)(iteration * horizontalDataFactor);
+
+                    dataYPredator[iteration] = (int) (diagramData.getPredatorAmount(iteration) * verticalDataFactor);
+                    dataYPrey[iteration] = (int) (diagramData.getPreyAmount(iteration) * verticalDataFactor);
+                }
+
+                //draw predator Graph
+                g.drawPolyline(dataX, dataYPredator, dataX.length);
+
+                //draw prey Graph
+                g.drawPolyline(dataX, dataYPrey, dataX.length);
+            }
         }
     }
 
