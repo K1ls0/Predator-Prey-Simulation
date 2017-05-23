@@ -41,6 +41,7 @@ public class JDiagramPanel extends JPanel {
         drawGrid(g);
 
         if (diagramEnabled) {
+            initializeFactors();
             drawGridSections(g);
             drawGraph(g);
         } else {
@@ -80,17 +81,26 @@ public class JDiagramPanel extends JPanel {
 
     private void drawGridSections(Graphics g) {
         if (diagramData != null) {
-            long    maxData = getMaxData(diagramData.getPredatorAmount()) < getMaxData(diagramData.getPreyAmount()) ?
-                    getMaxData(diagramData.getPreyAmount()) : getMaxData(diagramData.getPredatorAmount());
-
             //draw vertical sections
             //TODO not implemented fully yet
-            setDataFactor(maxData, HORIZONTAL_LINE);
+
+
 
 
 
             //draw horizontal sections
             //TODO not implemented yet
+        }
+    }
+
+    private void initializeFactors() {
+        if (diagramData != null) {
+            long maxData = getMaxData(diagramData.getPredatorAmount()) < getMaxData(diagramData.getPreyAmount()) ?
+                    getMaxData(diagramData.getPreyAmount()) : getMaxData(diagramData.getPredatorAmount());
+
+            setDataFactor(maxData, HORIZONTAL_LINE);
+
+
             setDataFactor(diagramData.getDataLength(), VERTICAL_LINE);
         }
     }
