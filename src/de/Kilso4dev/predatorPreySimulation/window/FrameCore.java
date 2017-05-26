@@ -10,6 +10,8 @@ import de.Kilso4dev.predatorPreySimulation.window.components.JDiagramPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -137,12 +139,14 @@ public class FrameCore extends JFrame {
         headlineMenu.add(animalInfo);
 
         JLabel preyInfo = new JLabel("Beute:");
+        preyInfo.setForeground(new Color(0, 110,0));
         preyInfo.setBounds(600, 59, 60, 30);
         preyInfo.setVisible(true);
         preyInfo.setFont(fAll);
         headlineMenu.add(preyInfo);
 
         JLabel predatorInfo = new JLabel("Räuber:");
+        predatorInfo.setForeground(new Color(110, 0, 0));
         predatorInfo.setBounds(600, 89, 60, 30);
         predatorInfo.setVisible(true);
         predatorInfo.setFont(fAll);
@@ -152,12 +156,14 @@ public class FrameCore extends JFrame {
         preyInput.setBounds(675, 59, 60, 30);
         preyInput.setVisible(true);
         preyInput.setFont(fAll);
+        preyInput.addChangeListener(new InputSpinnerChanged(this));
         headlineMenu.add(preyInput);
 
         predatorInput = new JSpinner(new SpinnerNumberModel(8, 1, Integer.MAX_VALUE, 1));
         predatorInput.setBounds(675, 89, 60, 30);
         predatorInput.setVisible(true);
         predatorInput.setFont(fAll);
+        predatorInput.addChangeListener(new InputSpinnerChanged(this));
         headlineMenu.add(predatorInput);
 
         animalsRandom = new JButton("Zufällige Steine");
@@ -180,6 +186,7 @@ public class FrameCore extends JFrame {
         fieldInput.setBounds(300, 59, 60, 30);
         fieldInput.setVisible(true);
         fieldInput.setFont(fAll);
+        fieldInput.addChangeListener(new InputSpinnerChanged(this));
         headlineMenu.add(fieldInput);
 
         fieldRandom = new JButton("Zufällige Größe");
@@ -246,6 +253,7 @@ public class FrameCore extends JFrame {
 
         String iteration = formatByNumberLength(maxGenerations, data.iteration++);
         partOutput.append(iteration + ". Gen:     Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + "       Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
+        //partOutput.setCaretPosition(partOutput.getDocument().getLength()); -> less performance
     }
 
 
@@ -341,9 +349,22 @@ public class FrameCore extends JFrame {
 
                 int fieldInputRandom;
 
-                do {
-                    fieldInputRandom = (int) ((Math.random() * 200) + 5);
-                } while (fieldInputRandom < ((int)(preyInput.getValue()) +  (int) predatorInput.getValue()));
+                fieldInputRandom = (int) ((Math.random() * 200) + 5);
+
+                while ((((Integer) preyInput.getValue()) + ((Integer) predatorInput.getValue()) >  fieldInputRandom * fieldInputRandom)) {
+
+
+                    //create random Predators and preys
+                    int predatorInputRandom, preyInputRandom;
+                    do {
+                        preyInputRandom = (int)(Math.random() * ((Integer)fieldInput.getValue() * (Integer)fieldInput.getValue()));
+                        predatorInputRandom = (int)(Math.random() * ((Integer)fieldInput.getValue() * (Integer)fieldInput.getValue()));
+                    } while ((preyInputRandom + predatorInputRandom) > ((int)fieldInput.getValue() * (int)fieldInput.getValue()));
+
+
+                    preyInput.setValue(preyInputRandom);
+                    predatorInput.setValue(predatorInputRandom);
+                }
 
                 fieldInput.setValue(fieldInputRandom);
 
@@ -359,6 +380,34 @@ public class FrameCore extends JFrame {
             for (Component cComponent : headlineMenu.getComponents()) {
                 cComponent.setEnabled(b);
             }
+        }
+    }
+
+
+    /**
+     * Helping Class for redirecting of Spinner Change Events to the ActionPerformed Events
+     */
+    private class InputSpinnerChanged implements ChangeListener {
+
+        private FrameCore ref;
+
+        private InputSpinnerChanged(FrameCore reference) {
+            ref = reference;
+        }
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+
+            long    square = ((Integer) fieldInput.getValue()) * ((Integer) fieldInput.getValue()),
+                    inputAmount = ((Integer) predatorInput.getValue()) + ((Integer) preyInput.getValue());
+
+
+            if (e.getSource().equals(fieldInput) && inputAmount > square) {
+                new ButtonListener(ref).actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "bRandomPreysPredatorsPressed"));
+            } else if ((e.getSource().equals(predatorInput) || e.getSource().equals(preyInput)) && inputAmount > square) {
+                new ButtonListener(ref).actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "bRandomFieldPressed"));
+            }
+
         }
     }
 }

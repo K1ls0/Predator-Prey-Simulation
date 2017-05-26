@@ -1,5 +1,6 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
+import de.Kilso4dev.predatorPreySimulation.core.events.Coordinates;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
 import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
 
@@ -8,10 +9,12 @@ import java.util.List;
 
 public class SimulationCore {
 
-    Animal[][] playingField;
+    private Animal[][] playingField;
 
-    SimulationThread simulation;
-    List<MoveData> moveData;
+
+    private SimulationThread simulation;
+
+    private List<MoveData> moveData;
 
     int generations;
 
@@ -20,28 +23,25 @@ public class SimulationCore {
         this.generations = generations;
         this.moveData = new LinkedList<>();
 
-        //initialize predators
-        for (int i = 0; i < predators; i++) {
-            playingField[(int) (Math.random() * playingField.length)][(int) (Math.random() * playingField[0].length)] = new Predator();
+
+        while (predators + preys > gridX * gridY) {
+            predators--;
+            preys--;
         }
 
-        int x;
-        int y;
+        initializePredators(playingField, predators);
 
-        //initialize Preys
-        for (int i = 0; i < preys; i++) {
-            do {
-                x = (int) (Math.random() * playingField.length);
-                y = (int) (Math.random() * playingField[0].length);
-            } while (playingField[x][y] instanceof Predator);
+        initializePreys(playingField, preys);
 
-            playingField[x][y] = new Prey();
-        }
+        moveData.add(new MoveData(new Coordinates(0, 0), predators, preys, "Initialization", 0));
     }
 
     public void startSimulation(FrameCore reference, SimulationFinishedListener l) {
         simulation = new SimulationThread(reference, playingField, generations, moveData);
         simulation.addSimulationFinishedListener(l);
+
+
+        reference.addTextAreaEntry(moveData.get(0), generations);
 
         simulation.start();
     }
@@ -55,5 +55,35 @@ public class SimulationCore {
 
     private List<MoveData> getMoveData() {
         return moveData;
+    }
+
+
+    private void initializePredators(Animal[][] playingField, int amount) {
+        int x, y;
+
+        //initialize Predators
+        for (int i = 0; i < amount; i++) {
+
+            do {
+                x = (int) (Math.random() * playingField.length);
+                y = (int) (Math.random() * playingField.length);
+            } while (playingField[x][y] != null);
+
+            playingField[x][y] = new Predator();
+        }
+    }
+
+    private void initializePreys(Animal[][] playingField, int amount) {
+        int x, y;
+
+        //initialize Preys
+        for (int i = 0; i < amount; i++) {
+            do {
+                x = (int) (Math.random() * playingField.length);
+                y = (int) (Math.random() * playingField[0].length);
+            } while (playingField[x][y] != null);
+
+            playingField[x][y] = new Prey();
+        }
     }
 }
