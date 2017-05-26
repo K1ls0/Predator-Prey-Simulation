@@ -1,6 +1,7 @@
 package de.Kilso4dev.predatorPreySimulation.window;
 
 import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
+import de.Kilso4dev.predatorPreySimulation.core.DiagramData;
 import de.Kilso4dev.predatorPreySimulation.core.MoveData;
 import de.Kilso4dev.predatorPreySimulation.core.SimulationCore;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
@@ -223,13 +224,20 @@ public class FrameCore extends JFrame {
     }
 
 
-
+    /**
+     * A method that resets Components when Starting a new Simulation
+     * @return nothing
+     */
     private void resetOutput() {
+
         partOutput.setText(null);
 
 
         predOutput.setText(null);
         preyOutput.setText(null);
+
+
+        diagram.setDiagram(false);
 
         SimulationConstants.PART_OUTPUT_FORMAT = null;
     }
@@ -306,6 +314,9 @@ public class FrameCore extends JFrame {
 
                         predOutput.setText("Predators: " + (lastData.predAmount * SimulationConstants.PREDATOR_AMOUNT));
                         preyOutput.setText("Preys: " + (lastData.preyAmount * SimulationConstants.PREY_AMOUNT));
+
+                        diagram.setDiagramData(new DiagramData((MoveData[]) data.toArray()));
+                        diagram.setDiagram(true);
                     }
                 });
 

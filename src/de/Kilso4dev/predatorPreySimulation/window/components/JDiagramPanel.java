@@ -179,10 +179,16 @@ public class JDiagramPanel extends JPanel {
 
 
 
-    public void enableDiagram(boolean flag) {
+    public void setDiagram(boolean flag) {
         setVisible(flag);
+
+        this.diagramData = null;
 
         this.diagramEnabled = flag;
         repaint();
+    }
+
+    public void setDiagramData(DiagramData d) {
+        this.diagramData = d;
     }
 }
