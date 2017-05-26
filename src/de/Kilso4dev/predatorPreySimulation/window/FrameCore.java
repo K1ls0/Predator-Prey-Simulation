@@ -216,7 +216,7 @@ public class FrameCore extends JFrame {
 
     private void createDiagram() {
         diagram = new JDiagramPanel();
-        diagram.setBounds(400, 200, 200, 400);
+        diagram.setBounds(400, 200, 500, 400);
         diagram.setFont(fAll);
         diagram.setVisible(false);
 
@@ -315,7 +315,7 @@ public class FrameCore extends JFrame {
                         predOutput.setText("Predators: " + (lastData.predAmount * SimulationConstants.PREDATOR_AMOUNT));
                         preyOutput.setText("Preys: " + (lastData.preyAmount * SimulationConstants.PREY_AMOUNT));
 
-                        diagram.setDiagramData(new DiagramData((MoveData[]) data.toArray()));
+                        diagram.setDiagramData(new DiagramData(data.toArray(new MoveData[data.size()])));
                         diagram.setDiagram(true);
                     }
                 });

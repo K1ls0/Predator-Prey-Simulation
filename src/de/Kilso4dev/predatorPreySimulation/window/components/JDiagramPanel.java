@@ -44,8 +44,6 @@ public class JDiagramPanel extends JPanel {
             initializeFactors();
             drawGridSections(g);
             drawGraph(g);
-        } else {
-
         }
     }
 
@@ -73,9 +71,10 @@ public class JDiagramPanel extends JPanel {
         g.drawPolyline(xPoints, yPoints, xPoints.length);
 
         horizontalStartPoint = 15;
-        verticalStartPoint = getHeight();
+        verticalStartPoint = getHeight() - 15;
 
         horizontalLineLength = getWidth() - 30;
+        System.out.println(horizontalLineLength);
         verticalLineLength = getHeight() - 30;
     }
 
@@ -98,10 +97,14 @@ public class JDiagramPanel extends JPanel {
             long maxData = getMaxData(diagramData.getPredatorAmount()) < getMaxData(diagramData.getPreyAmount()) ?
                     getMaxData(diagramData.getPreyAmount()) : getMaxData(diagramData.getPredatorAmount());
 
-            setDataFactor(maxData, HORIZONTAL_LINE);
+            setDataFactor(diagramData.getDataLength(), HORIZONTAL_LINE);
+
+            System.out.println("Horizontal dataFactor: " + this.horizontalDataFactor);
 
 
-            setDataFactor(diagramData.getDataLength(), VERTICAL_LINE);
+            setDataFactor(maxData, VERTICAL_LINE);
+
+            System.out.println("Vertical dataFactor: " + this.verticalDataFactor);
         }
     }
 
@@ -118,10 +121,10 @@ public class JDiagramPanel extends JPanel {
 
     private void setDataFactor(long maximumData, int alignment) {
         if (alignment == HORIZONTAL_LINE) {
-            horizontalDataFactor = horizontalLineLength / maximumData;
+            horizontalDataFactor = (double) horizontalLineLength / (double) maximumData;
 
         } else if (alignment == VERTICAL_LINE) {
-            verticalDataFactor = verticalLineLength / maximumData;
+            verticalDataFactor = (double) verticalLineLength / (double) maximumData;
         }
     }
 
@@ -129,9 +132,13 @@ public class JDiagramPanel extends JPanel {
 
         if (verticalDataFactor != NO_DATA_FACTOR && horizontalDataFactor != NO_DATA_FACTOR) {
             if (alignment == HORIZONTAL_LINE) {
-                return (long) ((data * this.horizontalDataFactor) + horizontalStartPoint);
+                System.out.println("Horizontal Pixel: " + (horizontalStartPoint + (data * this.horizontalDataFactor)));
+
+                return (long) (horizontalStartPoint + (data * this.horizontalDataFactor));
             } else if (alignment == VERTICAL_LINE) {
-                return (long) ((data * this.verticalDataFactor) + verticalStartPoint);
+                System.out.println("vertical Pixel: " + (verticalStartPoint - (data * this.verticalDataFactor)));
+
+                return (long) (verticalStartPoint - (data * this.verticalDataFactor));
             }
         }
 
@@ -162,17 +169,26 @@ public class JDiagramPanel extends JPanel {
             if (verticalDataFactor != NO_DATA_FACTOR || horizontalDataFactor != NO_DATA_FACTOR) {
 
                 for (int iteration = 0; iteration < diagramData.getDataLength(); iteration++) {
-                    dataX[iteration] =(int)(iteration * horizontalDataFactor);
 
-                    dataYPredator[iteration] = (int) (diagramData.getPredatorAmount(iteration) * verticalDataFactor);
-                    dataYPrey[iteration] = (int) (diagramData.getPreyAmount(iteration) * verticalDataFactor);
+                    dataX[iteration] = (int) pixelLengthOf(iteration, HORIZONTAL_LINE);
+
+                    dataYPredator[iteration] = (int) pixelLengthOf(diagramData.getPredatorAmount(iteration), VERTICAL_LINE);
+                    dataYPrey[iteration] = (int) pixelLengthOf(diagramData.getPreyAmount(iteration), VERTICAL_LINE);
+
+
                 }
 
+                Color oldColor = g.getColor();
+
+                g.setColor(new Color(110,0,0));
                 //draw predator Graph
                 g.drawPolyline(dataX, dataYPredator, dataX.length);
 
+                g.setColor(new Color(0, 110,0));
                 //draw prey Graph
                 g.drawPolyline(dataX, dataYPrey, dataX.length);
+
+                g.setColor(oldColor);
             }
         }
     }
@@ -182,7 +198,9 @@ public class JDiagramPanel extends JPanel {
     public void setDiagram(boolean flag) {
         setVisible(flag);
 
-        this.diagramData = null;
+        if (!flag) {
+            this.diagramData = null;
+        }
 
         this.diagramEnabled = flag;
         repaint();
