@@ -48,7 +48,7 @@ public class FrameCore extends JFrame {
         createBottomLine();
         createOutput();
         createDiagram();
-        createBeta();
+        //createBeta();
     }
 
     private void createBeta() {
@@ -253,7 +253,6 @@ public class FrameCore extends JFrame {
 
         String iteration = formatByNumberLength(maxGenerations, data.iteration++);
         partOutput.append(iteration + ". Gen:     Predators: " + (data.predAmount * SimulationConstants.PREDATOR_AMOUNT) + "       Preys: " + (data.preyAmount * SimulationConstants.PREY_AMOUNT)+ "\n");
-        //partOutput.setCaretPosition(partOutput.getDocument().getLength()); -> less performance
     }
 
 
@@ -312,21 +311,9 @@ public class FrameCore extends JFrame {
 
                 resetOutput();
 
-                simulationCore.startSimulation(referenceFrame, new SimulationFinishedListener() {
-                    @Override
-                    public void SimulationFinished(SimulationEvent e) {
-                        change(true);
-                        java.util.List<MoveData> data = e.getSource().getMoveData();
 
-                        MoveData lastData = data.get(data.size()-1);
-
-                        predOutput.setText("Predators: " + (lastData.predAmount * SimulationConstants.PREDATOR_AMOUNT));
-                        preyOutput.setText("Preys: " + (lastData.preyAmount * SimulationConstants.PREY_AMOUNT));
-
-                        diagram.setDiagramData(new DiagramData(data.toArray(new MoveData[data.size()])));
-                        diagram.setDiagram(true);
-                    }
-                });
+                //adding Listener that fires after Simulation is finished
+                simulationCore.startSimulation(referenceFrame, new PredPreySimulationFinishedListener(this));
 
 
 
@@ -374,7 +361,7 @@ public class FrameCore extends JFrame {
             }
         }
 
-        private void change(boolean b) {
+        void change(boolean b) {
             startButton.setEnabled(b);
             stopButton.setEnabled(!b);
             for (Component cComponent : headlineMenu.getComponents()) {
@@ -409,5 +396,31 @@ public class FrameCore extends JFrame {
             }
 
         }
+    }
+
+    private class PredPreySimulationFinishedListener implements  SimulationFinishedListener {
+        private ButtonListener reference;
+
+        public PredPreySimulationFinishedListener(ButtonListener ref) {
+            reference = ref;
+        }
+
+
+        @Override
+        public void SimulationFinished(SimulationEvent e) {
+            reference.change(true);
+            java.util.List<MoveData> data = e.getSource().getMoveData();
+
+            MoveData lastData = data.get(data.size()-1);
+
+
+            predOutput.setText("Predators: " + (lastData.predAmount * SimulationConstants.PREDATOR_AMOUNT));
+            preyOutput.setText("Preys: " + (lastData.preyAmount * SimulationConstants.PREY_AMOUNT));
+
+            partOutput.setCaretPosition(partOutput.getDocument().getLength());
+            diagram.setDiagramData(new DiagramData(data.toArray(new MoveData[data.size()])));
+            diagram.setDiagram(true);
+            }
+
     }
 }
