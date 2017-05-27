@@ -1,5 +1,6 @@
 package de.Kilso4dev.predatorPreySimulation;
 
+import java.awt.*;
 import java.text.DecimalFormat;
 
 public final class SimulationConstants {
@@ -11,4 +12,5 @@ public final class SimulationConstants {
 
     public static DecimalFormat PART_OUTPUT_FORMAT = null;
 
+    public static final Font fAll = new Font("Times New Roman", Font.PLAIN, 17);
 }

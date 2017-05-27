@@ -1,6 +1,8 @@
 package de.Kilso4dev.predatorPreySimulation.window.components;
 
+import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
 import de.Kilso4dev.predatorPreySimulation.core.*;
+import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,11 +53,31 @@ public class JDiagramPanel extends JPanel {
 
 
     private void drawGrid(Graphics g) {
+        g.setFont(SimulationConstants.fAll);
+
+
         //horizontal diagram line
         g.drawLine(15, getHeight() - 15, getWidth() - 15, getHeight() - 15);
 
         //vertical diagram line
         g.drawLine(15, getHeight() - 15, 15, 15);
+
+
+
+
+
+
+        //horizontal label
+        char[] drawChars = "Generations".toCharArray();
+        g.drawChars(drawChars, 0, drawChars.length, getWidth() - 83, getHeight() - 25);
+
+        //vertical label
+        drawChars = "Animal Count".toCharArray();
+        g.drawChars(drawChars, 0, drawChars.length, 20, 15);
+
+
+
+
 
         //arrow vertical
         int[]   xPoints = {10, 15, 20},
@@ -63,18 +85,23 @@ public class JDiagramPanel extends JPanel {
 
         g.drawPolyline(xPoints, yPoints, xPoints.length);
 
-
         //arrow horizontal
         xPoints = new int[] {getWidth() - 20, getWidth() - 15, getWidth() -20};
         yPoints = new int[] {getHeight() - 10, getHeight() - 15, getHeight() - 20};
 
         g.drawPolyline(xPoints, yPoints, xPoints.length);
 
+
+
+
+
+
+
+
         horizontalStartPoint = 15;
         verticalStartPoint = getHeight() - 15;
 
         horizontalLineLength = getWidth() - 30;
-        System.out.println(horizontalLineLength);
         verticalLineLength = getHeight() - 30;
     }
 
@@ -99,12 +126,8 @@ public class JDiagramPanel extends JPanel {
 
             setDataFactor(diagramData.getDataLength(), HORIZONTAL_LINE);
 
-            System.out.println("Horizontal dataFactor: " + this.horizontalDataFactor);
-
 
             setDataFactor(maxData, VERTICAL_LINE);
-
-            System.out.println("Vertical dataFactor: " + this.verticalDataFactor);
         }
     }
 
@@ -132,11 +155,9 @@ public class JDiagramPanel extends JPanel {
 
         if (verticalDataFactor != NO_DATA_FACTOR && horizontalDataFactor != NO_DATA_FACTOR) {
             if (alignment == HORIZONTAL_LINE) {
-                System.out.println("Horizontal Pixel: " + (horizontalStartPoint + (data * this.horizontalDataFactor)));
 
                 return (long) (horizontalStartPoint + (data * this.horizontalDataFactor));
             } else if (alignment == VERTICAL_LINE) {
-                System.out.println("vertical Pixel: " + (verticalStartPoint - (data * this.verticalDataFactor)));
 
                 return (long) (verticalStartPoint - (data * this.verticalDataFactor));
             }
