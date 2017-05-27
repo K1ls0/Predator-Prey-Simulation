@@ -48,16 +48,16 @@ public class FrameCore extends JFrame {
         createBottomLine();
         createOutput();
         createDiagram();
-        createBeta();
+        //createBeta();
     }
 
-    private void createBeta() {
+    /*private void createBeta() {
         JLabel betaInfo = new JLabel("Beta - Work in progress");
         betaInfo.setBounds(550, 225, 250, 49);
         betaInfo.setVisible(true);
         betaInfo.setFont(fAll);
         cMainWindow.add(betaInfo);
-    }
+    } */
 
     private void createBottomLine() {
         stopButton = new JButton("Abbruch");
