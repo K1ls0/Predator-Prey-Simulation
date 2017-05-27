@@ -51,13 +51,13 @@ public class FrameCore extends JFrame {
         //createBeta();
     }
 
-    /*private void createBeta() {
+    private void createBeta() {
         JLabel betaInfo = new JLabel("Beta - Work in progress");
         betaInfo.setBounds(550, 225, 250, 49);
         betaInfo.setVisible(true);
         betaInfo.setFont(fAll);
         cMainWindow.add(betaInfo);
-    } */
+    }
 
     private void createBottomLine() {
         stopButton = new JButton("Abbruch");
@@ -153,21 +153,21 @@ public class FrameCore extends JFrame {
         headlineMenu.add(predatorInfo);
 
         preyInput = new JSpinner(new SpinnerNumberModel(8, 1, Integer.MAX_VALUE, 1));
-        preyInput.setBounds(675, 59, 60, 30);
+        preyInput.setBounds(665, 59, 90, 30);
         preyInput.setVisible(true);
         preyInput.setFont(fAll);
         preyInput.addChangeListener(new InputSpinnerChanged(this));
         headlineMenu.add(preyInput);
 
         predatorInput = new JSpinner(new SpinnerNumberModel(8, 1, Integer.MAX_VALUE, 1));
-        predatorInput.setBounds(675, 89, 60, 30);
+        predatorInput.setBounds(665, 89, 90, 30);
         predatorInput.setVisible(true);
         predatorInput.setFont(fAll);
         predatorInput.addChangeListener(new InputSpinnerChanged(this));
         headlineMenu.add(predatorInput);
 
         animalsRandom = new JButton("Zufällige Steine");
-        animalsRandom.setBounds(750, 59, 150, 60);
+        animalsRandom.setBounds(770, 59, 150, 60);
         animalsRandom.setVisible(true);
         animalsRandom.setFont(fAll);
         animalsRandom.setActionCommand("bRandomPreysPredatorsPressed");
@@ -183,14 +183,14 @@ public class FrameCore extends JFrame {
         headlineMenu.add(fieldInfo);
 
         fieldInput = new JSpinner(new SpinnerNumberModel(6, 1, Integer.MAX_VALUE, 1));
-        fieldInput.setBounds(300, 59, 60, 30);
+        fieldInput.setBounds(300, 59, 80, 30);
         fieldInput.setVisible(true);
         fieldInput.setFont(fAll);
         fieldInput.addChangeListener(new InputSpinnerChanged(this));
         headlineMenu.add(fieldInput);
 
         fieldRandom = new JButton("Zufällige Größe");
-        fieldRandom.setBounds(370, 59, 150, 30);
+        fieldRandom.setBounds(390, 59, 150, 30);
         fieldRandom.setVisible(true);
         fieldRandom.setFont(fAll);
         fieldRandom.setActionCommand("bRandomFieldPressed");
@@ -205,15 +205,14 @@ public class FrameCore extends JFrame {
         generationInfo.setFont(fAll);
         headlineMenu.add(generationInfo);
 
-
         generationInput = new JSpinner(new SpinnerNumberModel(100, 1, Integer.MAX_VALUE, 10));
-        generationInput.setBounds(20, 59, 60, 30);
+        generationInput.setBounds(20, 59, 80, 30);
         generationInput.setVisible(true);
         generationInput.setFont(fAll);
         headlineMenu.add(generationInput);
 
         generationRandom = new JButton("Zufällige Anzahl");
-        generationRandom.setBounds(90, 59, 150, 30);
+        generationRandom.setBounds(110, 59, 150, 30);
         generationRandom.setVisible(true);
         generationRandom.setFont(fAll);
         generationRandom.setActionCommand("bRandomAmountPressed");
