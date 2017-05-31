@@ -1,5 +1,6 @@
 package de.Kilso4dev.predatorPreySimulation.core;
 
+import de.Kilso4dev.predatorPreySimulation.SimulationConstants;
 import de.Kilso4dev.predatorPreySimulation.core.events.Coordinates;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
 import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
@@ -7,9 +8,13 @@ import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
 import java.util.LinkedList;
 import java.util.List;
 
+import static de.Kilso4dev.predatorPreySimulation.SimulationConstants.NO_ANIMAL;
+import static de.Kilso4dev.predatorPreySimulation.SimulationConstants.PREDATOR;
+import static de.Kilso4dev.predatorPreySimulation.SimulationConstants.PREY;
+
 public class SimulationCore {
 
-    private Animal[][] playingField;
+    private byte[][] playingField;
 
 
     private SimulationThread simulation;
@@ -19,7 +24,19 @@ public class SimulationCore {
     int generations;
 
     public SimulationCore(int gridX, int gridY, int predators, int preys, int generations) {
-        this.playingField = new Animal[gridX][gridY];
+
+        //Initialize playingField
+        this.playingField = new byte[gridX][gridY];
+
+        for (int x = 0; x < playingField.length; x++) {
+            for (int y = 0; y < playingField[x].length; y++) {
+                playingField[x][y] = NO_ANIMAL;
+            }
+        }
+
+
+
+
         this.generations = generations;
         this.moveData = new LinkedList<>();
 
@@ -58,7 +75,7 @@ public class SimulationCore {
     }
 
 
-    private void initializePredators(Animal[][] playingField, int amount) {
+    private void initializePredators(byte[][] playingField, int amount) {
         int x, y;
 
         //initialize Predators
@@ -67,13 +84,13 @@ public class SimulationCore {
             do {
                 x = (int) (Math.random() * playingField.length);
                 y = (int) (Math.random() * playingField.length);
-            } while (playingField[x][y] != null);
+            } while (playingField[x][y] != NO_ANIMAL);
 
-            playingField[x][y] = new Predator();
+            playingField[x][y] = PREDATOR;
         }
     }
 
-    private void initializePreys(Animal[][] playingField, int amount) {
+    private void initializePreys(byte[][] playingField, int amount) {
         int x, y;
 
         //initialize Preys
@@ -81,9 +98,9 @@ public class SimulationCore {
             do {
                 x = (int) (Math.random() * playingField.length);
                 y = (int) (Math.random() * playingField[0].length);
-            } while (playingField[x][y] != null);
+            } while (playingField[x][y] != NO_ANIMAL);
 
-            playingField[x][y] = new Prey();
+            playingField[x][y] = PREY;
         }
     }
 }

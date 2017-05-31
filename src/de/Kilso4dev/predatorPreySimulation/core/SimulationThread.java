@@ -5,22 +5,24 @@ import de.Kilso4dev.predatorPreySimulation.core.events.SimulationEvent;
 import de.Kilso4dev.predatorPreySimulation.core.events.SimulationFinishedListener;
 import de.Kilso4dev.predatorPreySimulation.window.FrameCore;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
+
+import static de.Kilso4dev.predatorPreySimulation.SimulationConstants.PREDATOR;
+import static de.Kilso4dev.predatorPreySimulation.SimulationConstants.NO_ANIMAL;
+import static de.Kilso4dev.predatorPreySimulation.SimulationConstants.PREY;
 
 public class SimulationThread extends Thread {
     private FrameCore coreReference;
     private int generations;
 
-    private Animal[][] playingField;
+    private byte[][] playingField;
     private List<MoveData> targetData;
 
     private List<SimulationFinishedListener> listener;
 
 
-    public SimulationThread(FrameCore reference, Animal[][] playingField, int generations, List<MoveData> targetData) {
+    public SimulationThread(FrameCore reference, byte[][] playingField, int generations, List<MoveData> targetData) {
         setDaemon(true);
 
         this.coreReference = reference;
@@ -62,10 +64,10 @@ public class SimulationThread extends Thread {
         md.coordinates = new Coordinates(x, y);
         md.iteration = iteration;
 
-        if ((playingField[x][y] == null) || (playingField[x][y] instanceof Predator)) {
+        if ((playingField[x][y] == NO_ANIMAL) || (playingField[x][y] == PREDATOR)) {
             deleteNextPredator();
-        } else if (playingField[x][y] instanceof Prey) {
-            playingField[x][y] = new Predator();
+        } else if (playingField[x][y] == PREY) {
+            playingField[x][y] = PREDATOR;
         }
 
         md.predAmount = getPredatorAmount();
@@ -85,13 +87,13 @@ public class SimulationThread extends Thread {
         md.coordinates = new Coordinates(x, y);
         md.iteration = iteration;
 
-        if (playingField[x][y] == null) {
-            playingField[x][y] = new Prey();
+        if (playingField[x][y] == NO_ANIMAL) {
+            playingField[x][y] = PREY;
 
-        } else if (playingField[x][y] instanceof Prey) {
+        } else if (playingField[x][y] == PREY) {
             Coordinates d = getNextFreeArea(new Coordinates(x, y));
             if (d != null) {
-                playingField[d.getX()][d.getY()] = new Prey();
+                playingField[d.getX()][d.getY()] = PREY;
             }
             md.coordinates = d;
         }
@@ -107,8 +109,8 @@ public class SimulationThread extends Thread {
     private void deleteNextPredator() {
         for (int x = 0; x < playingField.length; x++) {
             for (int y = 0; y < playingField[x].length; y++) {
-                if (playingField[x][y] instanceof Predator) {
-                    playingField[x][y] = null;
+                if (playingField[x][y] == PREDATOR) {
+                    playingField[x][y] = NO_ANIMAL;
                     return;
                 }
             }
@@ -119,7 +121,7 @@ public class SimulationThread extends Thread {
     private Coordinates getNextFreeArea(Coordinates currentCoordinates) {
         for (int x = currentCoordinates.getX(); x < playingField.length; x++) {
             for (int y = currentCoordinates.getY(); y < playingField[x].length; y++) {
-                if (playingField[x][y] == null) {
+                if (playingField[x][y] == NO_ANIMAL) {
                     return new Coordinates(x, y);
                 }
             }
@@ -130,9 +132,9 @@ public class SimulationThread extends Thread {
     private long getPredatorAmount() {
         long iterator = 0;
 
-        for (Animal[] cAnimal1 : playingField) {
-            for (Animal cAnimal2 : cAnimal1) {
-                if (cAnimal2 != null && cAnimal2 instanceof Predator) {
+        for (byte[] cAnimal1dimensional : playingField) {
+            for (byte cAnimal : cAnimal1dimensional) {
+                if (cAnimal != NO_ANIMAL && cAnimal == PREDATOR) {
                     iterator++;
                 }
             }
@@ -143,9 +145,9 @@ public class SimulationThread extends Thread {
     private long getPreyAmount() {
         long iterator = 0;
 
-        for (Animal[] cAnimal1 : playingField) {
-            for (Animal cAnimal2 : cAnimal1) {
-                if (cAnimal2 != null && cAnimal2 instanceof Prey) {
+        for (byte[] cAnimal1dimensional : playingField) {
+            for (byte cAnimal : cAnimal1dimensional) {
+                if (cAnimal != NO_ANIMAL && cAnimal == PREY) {
                     iterator++;
                 }
             }
