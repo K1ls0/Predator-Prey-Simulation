@@ -8,7 +8,7 @@ import java.awt.*;
 public class MainFrame {
     public static void main(String[] args) {
         FrameCore mainWindow = new FrameCore();
-        mainWindow.setTitle("Simulation einer Räuber-Beute Beziehung");
+        mainWindow.setTitle("Simulation: Räuber-Beute-Beziehung - " + SimulationConstants.VERSION);
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.setBounds((int) ((Toolkit.getDefaultToolkit().getScreenSize().getWidth()) - 950) /2,
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() -700) /2,

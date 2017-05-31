@@ -4,6 +4,10 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public final class SimulationConstants {
+
+    //Version
+    public static final String VERSION = "v. 0.8";
+
     //not in use
     public static final String INFO_TEXT = "Dies ist ein Testsatz!\nUnd ich versuche, mit den Zeilen klar zu kommen";
 
